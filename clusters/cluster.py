@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from ClusterFeatures import *
+from clusterfeatures import ClusterFeatures
 
-class DAOdataset(object):
+class Cluster(object):
     """
         Estrutura para acesso, leitura e atualizações dos dados do conjunto,
         assim como também suas características estatísticas

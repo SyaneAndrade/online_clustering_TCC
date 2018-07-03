@@ -12,9 +12,9 @@ class ClusterFeatures(object):
     
     SS = []
     LS = []
-
-    def __init__(self, N):
-        self.N = N
+    N = 0
+    Raio = 0
+    Centroide = []
 
     # Método responsável por calcular a soma dos quadrados de todos os itens no vetor SS
     def CalSquare(self, data):
