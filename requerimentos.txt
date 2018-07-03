@@ -1,0 +1,14 @@
+Linguagem :
+
+- Python 2.7.15
+
+Instalações necessárias para rodar a aplicação:
+
+
+- Pandas
+- Scikit Learn
+- Matplotlib
+
+
+Preste atenção nas dependencias das mesmas citadas poderá ser necessário instalar outras necessárias.
+Mais basicamente são essas que utilizo nesse projeto.
