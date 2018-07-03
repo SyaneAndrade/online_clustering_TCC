@@ -1,4 +1,5 @@
-import panda as pd
+# -*- coding: utf-8 -*-
+import pandas as pd
 
 """
     DAO do arquivo, tem como parametro o caminho do arquivo
@@ -10,5 +11,5 @@ class DAOarquivo(object):
 
 
     def LerArquivo(self):
-        dataset = pd.read_csv(self.arquivo)
+        dataset = pd.read_csv(self.arquivo, sep= '|')
         return dataset

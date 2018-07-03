@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import math
 
 class ClusterFeatures(object):
@@ -14,7 +15,7 @@ class ClusterFeatures(object):
 
     def __init__(self, N):
         self.N = N
-    
+
     # Método responsável por calcular a soma dos quadrados de todos os itens no vetor SS
     def CalSquare(self, data):
         self.SS.append(pow(data[0], 2))
