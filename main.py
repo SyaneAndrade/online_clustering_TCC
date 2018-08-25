@@ -22,3 +22,13 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # Aplica o algoritimo kmenas nos dados
+    gerenciador.novo_data_stream()
+    #Plota o grafico mostrando a distribuição dos dados nos clusters
+    gerenciador.plot_grafico()
+
+if __name__ == '__main__':
+    main()
+
+
+    # https://gist.github.com/yjzhang/aaf460849a4398422785c0e85932688d
