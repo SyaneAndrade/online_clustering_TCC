@@ -50,7 +50,7 @@ class Gerenciador(object):
         plt.ylabel(' petal width in cm')
         plt.legend()
         plt.show()
-
+    
     def criarCluster(self, dados, centroids):
         return Cluster(dados)
     
@@ -73,7 +73,7 @@ class Gerenciador(object):
             dadosAgregados[labels[index]]['dados'].append(dadosRecebidos[index])
 
         return dadosAgregados
-
+    
 
 
     # Aplica o kmeans no conjunto de dados
