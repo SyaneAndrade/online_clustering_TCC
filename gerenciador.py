@@ -11,7 +11,7 @@ class Gerenciador(object):
         Classe responsável por gerenciar as funções necessárias
         Basicamente para não explicitar todas as funções existentes na main
     """
-    cluster = []
+    clusters = []
     dados = None
 
     def __init__(self, num_cluster):
@@ -27,10 +27,10 @@ class Gerenciador(object):
 
 
     # Responsável por iniciar os dados vindo do csv
-    def inicia_dataset(self, caminho):
+    def inicia_dataset(self, caminho, particao = 10):
         daoIO = DAOarquivo(caminho)
         iris = daoIO.LerArquivo()
-        self.dados = iris.iloc[:, 0:4].values
+        self.dados = iris.iloc[:particao, 0:4].values
 
     # Plota o grafico resultante da aplicação do kmeans no conjuto de dados
     def plot_grafico(self):
@@ -42,6 +42,30 @@ class Gerenciador(object):
         plt.ylabel(' petal width in cm')
         plt.legend()
         plt.show()
+
+    def criarCluster(self, dados, centroids):
+        return Cluster(dados)
+    
+    def preencherClusters(self, dadosOrganizados):
+        for cluster in dadosOrganizados:
+            novoCluster = self.criarCluster(dadosOrganizados[cluster]['dados'], 'Sem centroid')
+            self.clusters.append(novoCluster)
+    
+    def pegaClustersOrganizados(self, dadosRecebidos, labels, centroids):
+        qtdClusters = len(centroids)
+        dadosAgregados = {}
+        #instanciando o objeto
+        for i in range(qtdClusters):
+            dadosAgregados[i] = {
+                'dados': []
+                # centroid: False
+            }
+        # Colocando os dados
+        for index in range(len(dadosRecebidos)):
+            dadosAgregados[labels[index]]['dados'].append(dadosRecebidos[index])
+
+        return dadosAgregados
+
 
 
     # Aplica o kmeans no conjunto de dados
