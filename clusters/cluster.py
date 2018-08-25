@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from clusterfeatures import ClusterFeatures
+from .clusterfeatures import ClusterFeatures
 
 class Cluster(object):
     """

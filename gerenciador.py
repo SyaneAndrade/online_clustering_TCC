@@ -47,9 +47,18 @@ class Gerenciador(object):
     # Aplica o kmeans no conjunto de dados
     def aplica_kmeans(self):
         self.kmeans.fit(self.dados)
-        print "Mostrando os centroides selecionados"
-        print self.kmeans.cluster_centers_
-        print "\n\n"
-        print "Distribuição dos clusters nos dados"
-        print self.kmeans.labels_
-        print "\n\n"
+        print (self.dados)
+        print (self.clusters)
+        print ("Mostrando os centroides selecionados")
+        print (self.kmeans.cluster_centers_)
+        print ("\n\n")
+        print ("Distribuição dos clusters nos dados")
+        print (self.kmeans.labels_)
+        print ("\n\n")
+        print ("Objeto no fim")
+        print ("\n\n")
+        dadosOrganizados = self.pegaClustersOrganizados(self.dados, self.kmeans.labels_, self.kmeans.cluster_centers_)
+        self.preencherClusters(dadosOrganizados)
+        print('rqwerwqer')
+        print('\n\n')
+        print(self.clusters)
