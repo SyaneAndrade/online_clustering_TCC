@@ -43,4 +43,6 @@ class ClusterFeatures(object):
             return True
         return False
     
+    def __init__(self,  tamanhoDataset):
+        self.N = tamanhoDataset
             
