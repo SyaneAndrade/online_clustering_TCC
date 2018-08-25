@@ -32,6 +32,14 @@ class Gerenciador(object):
         iris = daoIO.LerArquivo()
         self.dados = iris.iloc[:particao, 0:4].values
 
+    def novo_data_stream(self, novosDados = None):
+        if not novosDados:
+            novosDados = self.dados
+        self.kmeans = KMeans(n_clusters=len(self.clusters), init=self.kmeans.cluster_centers_)
+        self.dados = novosDados
+        self.aplica_kmeans()
+        
+
     # Plota o grafico resultante da aplicação do kmeans no conjuto de dados
     def plot_grafico(self):
         plt.scatter(self.dados[:, 0], self.dados[:,1], s = 100, c = self.kmeans.labels_)

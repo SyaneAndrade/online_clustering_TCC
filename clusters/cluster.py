@@ -22,7 +22,7 @@ class Cluster(object):
 
     def PrintDataSet(self):
         for item in self.dataset:
-            print item 
+            print (item) 
     
 
     def AtualizaDados(self, new_item):
