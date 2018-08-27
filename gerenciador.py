@@ -91,6 +91,5 @@ class Gerenciador(object):
         print ("\n\n")
         dadosOrganizados = self.pegaClustersOrganizados(self.dados, self.kmeans.labels_, self.kmeans.cluster_centers_)
         self.preencherClusters(dadosOrganizados)
-        print('rqwerwqer')
         print('\n\n')
         print(self.clusters)
