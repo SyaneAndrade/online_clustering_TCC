@@ -15,13 +15,13 @@ def main():
     # Cria um df dos dados retirados do csv
     gerenciador.inicia_dataset(caminho)
     # Aplica o algoritimo kmenas nos dados
-    gerenciador.aplica_kmeans()
+    gerenciador.iniciar()
 
     #Plota o grafico mostrando a distribuição dos dados nos clusters
     gerenciador.plot_grafico()
 
     caminho = 'dados/mock/iris-dataset.csv'
-    gerenciador.inicia_dataset(caminho, 150)
+    gerenciador.inicia_dataset(caminho,10, 150)
     # Aplica o algoritimo kmenas nos dados
     gerenciador.novo_data_stream()
     #Plota o grafico mostrando a distribuição dos dados nos clusters
