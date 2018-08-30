@@ -11,8 +11,8 @@ class Gerenciador(object):
         Classe responsável por gerenciar as funções necessárias
         Basicamente para não explicitar todas as funções existentes na main
     """
-    clusters = []
-    dados = None
+    daoIO = None
+    executa = False
 
     def __init__(self, num_cluster):
         self.simple_kmeans = SimpleKmeans(num_cluster)
@@ -27,22 +27,21 @@ class Gerenciador(object):
 
 
     # Responsável por iniciar os dados vindo do csv
-    def inicia_dataset(self, caminho, inicial = 0, particao_final = 10):
-        daoIO = DAOarquivo(caminho)
-        iris = daoIO.LerArquivo()
-        self.dados = iris.iloc[inicial:particao_final, 0:4].values
+    def inicia_dataset(self, caminho, particao_final = 10):
+        self.daoIO = DAOarquivo(caminho)
+        self.daoIO.LerArquivo()
+        self.daoIO.calcula_particao(particao_final)
+        self.executa = self.daoIO.inicia_dados()
 
-    def novo_data_stream(self, novosDados = None):
-        if not novosDados:
-            novosDados = self.dados
-        self.kmeans = self.simple_kmeans.atualiza_kmeans(novosDados)
-        # self.dados = self.dados + novosDados
-        # self.simple_kmeans.aplica_kmeans()
+    def novo_data_stream(self):
+        self.executa = self.daoIO.pega_particao()
+        self.kmeans = self.simple_kmeans.atualiza_kmeans(self.daoIO.dados)
+        self.iniciar()
         
 
     # Plota o grafico resultante da aplicação do kmeans no conjuto de dados
     def plot_grafico(self):
-        plt.scatter(self.dados[:, 0], self.dados[:,1], s = 100, c = self.simple_kmeans.labels)
+        plt.scatter(self.daoIO.dados[:self.daoIO.pont_final, 0], self.daoIO.dados[:self.daoIO.pont_final,1], s = 100, c = self.simple_kmeans.labels)
         plt.scatter(self.simple_kmeans.centers[:, 0], self.simple_kmeans.centers[:, 1], s = 300, marker= '*', 
                     c = 'red',label = 'Centroids')
         plt.title('Iris Clusters and Centroids')
@@ -55,9 +54,14 @@ class Gerenciador(object):
         return Cluster(dados)
     
     def preencherClusters(self, dadosOrganizados):
-        for cluster in dadosOrganizados:
-            novoCluster = self.criarCluster(dadosOrganizados[cluster]['dados'], 'Sem centroid')
-            self.simple_kmeans.clusters.append(novoCluster)
+        if(self.simple_kmeans.clusters is None):
+            for cluster in dadosOrganizados:
+                novoCluster = self.criarCluster(dadosOrganizados[cluster]['dados'], 'Sem centroid')
+                self.simple_kmeans.clusters.append(novoCluster)
+        else:
+            for index in  range(0, len(self.simple_kmeans.clusters)):
+                self.simple_kmeans.cluster.append(dadosOrganizados[index]['dados'])
+
     
     def pegaClustersOrganizados(self, dadosRecebidos, labels, centroids):
         qtdClusters = len(centroids)
@@ -65,8 +69,8 @@ class Gerenciador(object):
         #instanciando o objeto
         for i in range(qtdClusters):
             dadosAgregados[i] = {
-                'dados': []
-                # centroid: False
+                'dados': [],
+                'centroid': centroids[i]
             }
         # Colocando os dados
         for index in range(len(dadosRecebidos)):
@@ -75,20 +79,10 @@ class Gerenciador(object):
         return dadosAgregados
     
 
-
     # Aplica o kmeans no conjunto de dados
     def iniciar(self):
-        # print (self.kmeans.fit(self.dados))
-        # print ("Mostrando os centroides selecionados")
-        # print (self.kmeans.cluster_centers_)
-        # print ("\n\n")
-        # print ("Distribuição dos clusters nos dados")
-        # print (self.kmeans.labels_)
-        # print ("\n\n")
-        # print ("Objeto no fim")
-        # print ("\n\n")
-        self.simple_kmeans.aplica_kmeans(self.dados)
-        dadosOrganizados = self.pegaClustersOrganizados(self.dados, self.simple_kmeans.labels, self.simple_kmeans.centers)
+        self.simple_kmeans.aplica_kmeans(self.daoIO.particao)
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.particao, self.simple_kmeans.labels, self.simple_kmeans.centers)
         self.preencherClusters(dadosOrganizados)
+        # print(len(self.simple_kmeans.labels))
         print('\n\n')
-        print(self.clusters)
