@@ -35,8 +35,7 @@ class Gerenciador(object):
 
     def novo_data_stream(self):
         self.executa = self.daoIO.pega_particao()
-        self.kmeans = self.simple_kmeans.atualiza_kmeans(self.daoIO.dados)
-        self.iniciar()
+        self.kmeans = self.simple_kmeans.atualiza_kmeans(self.daoIO.particao)
         
 
     # Plota o grafico resultante da aplicação do kmeans no conjuto de dados
