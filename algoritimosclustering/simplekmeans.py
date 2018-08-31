@@ -6,7 +6,7 @@ import pdb
 class SimpleKmeans(object):
     clusters  = []
     centers = None
-    labels = []
+    labels = None
     T = None
 
 
