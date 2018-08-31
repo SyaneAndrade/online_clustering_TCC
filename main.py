@@ -23,7 +23,6 @@ def main():
         # Aplica o algoritimo kmenas nos dados
         gerenciador.novo_data_stream()
         #Plota o grafico mostrando a distribuição dos dados nos clusters
-        print(gerenciador.simple_kmeans.centers)
         gerenciador.plot_grafico()
         print(gerenciador.simple_kmeans.centers)
 
