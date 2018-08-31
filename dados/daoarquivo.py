@@ -26,12 +26,12 @@ class DAOarquivo(object):
     def pega_particao(self):
         # print(self.pont_inicial)
         # print(self.pont_final)
-        self.pont_inicial = self.pont_final + 1
+        self.pont_inicial = self.pont_final
         self.pont_final = self.pont_final + self.batch
         if(self.pont_final >= len(self.dataset)):
-            self.pont_final = len(self.dataset) - 1
+            self.pont_final = len(self.dataset)
         self.particao = self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values
-        if(self.pont_final + 1 == len(self.dataset)):
+        if(self.pont_final == len(self.dataset)):
             return False
         return True
 
