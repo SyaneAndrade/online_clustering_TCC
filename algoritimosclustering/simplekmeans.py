@@ -11,7 +11,7 @@ class SimpleKmeans(object):
 
 
     def __init__(self, num_cluster):
-        self.kmeans = KMeans(n_clusters=num_cluster, init='random', max_iter=1000)
+        self.kmeans = KMeans(n_clusters=num_cluster, init='random')
         self.n_cluster = num_cluster
 
     def aplica_kmeans(self, dados):
@@ -33,7 +33,7 @@ class SimpleKmeans(object):
 
     def atualiza_kmeans(self, dados):
         # self.kmeans = KMeans(n_clusters=self.n_cluster, init=self.centers)
-        self.kmeans = KMeans(n_clusters=self.n_cluster, init=self.centers, max_iter=1000, n_init=1)
+        self.kmeans = KMeans(n_clusters=self.n_cluster, init=self.centers, n_init=1)
         self.aplica_kmeans(dados)
 
         
