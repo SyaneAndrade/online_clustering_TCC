@@ -61,7 +61,7 @@ class Gerenciador(object):
                 self.simple_kmeans.clusters.append(novoCluster)
         else:
             for index in  range(0, len(self.simple_kmeans.clusters)):
-                self.simple_kmeans.cluster.append(dadosOrganizados[index]['dados'])
+                self.simple_kmeans.clusters.append(dadosOrganizados[index]['dados'])
 
     
     def pegaClustersOrganizados(self, dadosRecebidos, labels, centroids):
