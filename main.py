@@ -17,7 +17,6 @@ def main():
     # Aplica o algoritimo kmenas nos dados
     gerenciador.iniciar()
     gerenciador.plot_grafico()
-    print(gerenciador.simple_kmeans.centers)
     while(gerenciador.executa):
         #Plota o grafico mostrando a distribuição dos dados nos clusters
         # Aplica o algoritimo kmenas nos dados
@@ -26,6 +25,7 @@ def main():
         gerenciador.plot_grafico()
         # print(gerenciador.simple_kmeans.centers)
         print('\n\n')
+    gerenciador.mostra_estatisticas()
 
 
 if __name__ == '__main__':

@@ -32,6 +32,7 @@ class Gerenciador(object):
         self.daoIO.LerArquivo()
         self.daoIO.calcula_particao(particao_final)
         self.daoIO.inicia_dados()
+        self.simple_kmeans.verdadeira_estatistica(self.daoIO.dados)
         if(particao_final > 1):
             self.executa = True
 
@@ -85,3 +86,7 @@ class Gerenciador(object):
         self.simple_kmeans.aplica_kmeans(self.daoIO.particao)
         dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.particao, self.simple_kmeans.labels, self.simple_kmeans.centers)
         self.preencherClusters(dadosOrganizados)
+
+
+    def mostra_estatisticas(self):
+        self.simple_kmeans.estatisticas()
