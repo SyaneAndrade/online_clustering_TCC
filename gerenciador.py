@@ -31,7 +31,9 @@ class Gerenciador(object):
         self.daoIO = DAOarquivo(caminho)
         self.daoIO.LerArquivo()
         self.daoIO.calcula_particao(particao_final)
-        self.executa = self.daoIO.inicia_dados()
+        self.daoIO.inicia_dados()
+        if(particao_final > 1):
+            self.executa = True
 
     def novo_data_stream(self):
         self.executa = self.daoIO.pega_particao()
