@@ -24,7 +24,8 @@ def main():
         gerenciador.novo_data_stream()
         #Plota o grafico mostrando a distribuição dos dados nos clusters
         gerenciador.plot_grafico()
-        print(gerenciador.simple_kmeans.centers)
+        # print(gerenciador.simple_kmeans.centers)
+        print('\n\n')
 
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from sklearn.cluster import KMeans
 import numpy as np
+import pdb
 
 class SimpleKmeans(object):
     clusters  = []
@@ -18,7 +19,15 @@ class SimpleKmeans(object):
         if (self.labels is None):
             self.labels = self.kmeans.labels_
         else:
+            print("criacao labels")
+            print(self.labels)
+            print(self.kmeans.labels_)
+            print("\n")
+            print("label apos append")
             self.labels = np.append(self.labels, self.kmeans.labels_)
+            print(self.labels)
+            print("\n\n")
+            pdb.set_trace()
         self.centers = self.kmeans.cluster_centers_
         self.T = self.kmeans.cluster_centers_.T
 
