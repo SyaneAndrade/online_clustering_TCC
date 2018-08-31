@@ -14,23 +14,10 @@ class SimpleKmeans(object):
 
     def aplica_kmeans(self, dados):
         self.kmeans.fit(dados)
-        print('label')
-        print(self.kmeans.labels_)
-        # for index in range(0, len(self.kmeans.labels_)):
-        #     self.labels.append(self.kmeans.labels_[index])
         if (self.labels is None):
             self.labels = self.kmeans.labels_
-        #     #  self.labels = self.kmeans.labels_.tolist()
         else:
-        #     # print('Aqui esta os labels gerados')
-        #     # print(len(self.kmeans.labels_)
-        #     # self.labels.append(self.kmeans.labels_.tolist())
-        #     # self.labels = self.labels + self.kmeans.labels_
-        #     # self.labels = self.kmeans.labels_
-        #     # print(len(self.labels))
-        #     print(len(self.kmeans.labels_))
             self.labels = np.append(self.kmeans.labels_, self.labels)
-        #     self.labels = array
         self.centers = self.kmeans.cluster_centers_
 
     def atualiza_kmeans(self, dados):

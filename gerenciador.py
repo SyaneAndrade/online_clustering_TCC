@@ -83,5 +83,3 @@ class Gerenciador(object):
         self.simple_kmeans.aplica_kmeans(self.daoIO.particao)
         dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.particao, self.simple_kmeans.labels, self.simple_kmeans.centers)
         self.preencherClusters(dadosOrganizados)
-        # print(len(self.simple_kmeans.labels))
-        print('\n\n')
