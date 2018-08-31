@@ -13,7 +13,7 @@ def main():
     # Cria um objeto do tipo gerenciador já inicializando os parametros necessários
     gerenciador = Gerenciador(num_cluster)
     # Cria um df dos dados retirados do csv
-    gerenciador.inicia_dataset(caminho)
+    gerenciador.inicia_dataset(caminho, 3)
     # Aplica o algoritimo kmenas nos dados
     gerenciador.iniciar()
     gerenciador.plot_grafico()
