@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
+import sklearn.preprocessing
 
 """
     DAO do arquivo, tem como parametro o caminho do arquivo
@@ -28,7 +29,7 @@ class DAOarquivo(object):
         self.pont_final = self.pont_final + self.batch
         if(self.pont_final >= len(self.dataset)):
             self.pont_final = len(self.dataset)
-        self.particao = self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values
+        self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
         if(self.pont_final == len(self.dataset)):
             return False
         return True
@@ -41,6 +42,12 @@ class DAOarquivo(object):
         self.LerArquivo()
         self.pont_inicial = 0
         self.pont_final = self.batch
-        self.dados = self.dataset.iloc[:, 0:4].values
-        self.particao = self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values
+        self.dados = self.normaliza_dados(self.dataset.iloc[:, 0:4].values)
+        self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
         return True
+
+    
+    def normaliza_dados(self, dados):
+        minmax_scaler = sklearn.preprocessing.MinMaxScaler(feature_range=(0, 1))
+        return minmax_scaler.fit_transform(dados)
+        # return dados
