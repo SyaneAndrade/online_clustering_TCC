@@ -17,3 +17,8 @@ links :
 http://minerandodados.com.br/index.php/2018/02/02/algoritmo-k-means-python-passo-passo/
 https://juliocprocha.wordpress.com/2017/07/05/uma-introducao-ao-k-means-clustering/
 https://juliocprocha.wordpress.com/2017/06/12/k-means-em-python/
+
+
+Algumas publicações utilizadas para acertividade dos algoritimos:
+https://www.kdnuggets.com/2017/03/naive-sharding-centroid-initialization-method.html
+https://www.datacamp.com/community/tutorials/k-means-clustering-python
