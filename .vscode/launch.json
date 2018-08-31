@@ -11,6 +11,13 @@
             "request": "launch",
             "program": "${file}"
         },
+
+        {
+            "name": "Python: Main sy lindona",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py"
+        },
         {
             "name": "Python: Attach",
             "type": "python",
