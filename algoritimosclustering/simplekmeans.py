@@ -4,7 +4,7 @@ import sklearn.metrics as smetrics
 import numpy as np
 import pdb
 
-class SimpleKmeans(object):
+class SimpleKmeansPython(object):
     clusters  = []
     centers = None
     labels = None

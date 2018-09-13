@@ -4,7 +4,7 @@ from clusters.clusterfeatures import ClusterFeatures
 from dados.daoarquivo import DAOarquivo
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
-from algoritimosclustering.simplekmeans import SimpleKmeans
+from algoritimosclustering.simplekmeans import SimpleKmeansPython
 
 class Gerenciador(object):
     """
@@ -15,7 +15,7 @@ class Gerenciador(object):
     executa = False
 
     def __init__(self, num_cluster):
-        self.simple_kmeans = SimpleKmeans(num_cluster)
+        self.simple_kmeans = SimpleKmeansPython(num_cluster)
                     
 
     # # Calculo dos cluters features ainda não utilizado, não sei bem como utilizar ainda, creio que ocorrerá mudanças
