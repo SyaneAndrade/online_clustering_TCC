@@ -5,6 +5,7 @@ from dados.daoarquivo import DAOarquivo
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 from algoritimosclustering.simplekmeans import SimpleKmeansPython
+from algoritimosclustering.simplekmeansmake import SimplePassKmeans
 
 class Gerenciador(object):
     """
@@ -16,6 +17,7 @@ class Gerenciador(object):
 
     def __init__(self, num_cluster):
         self.simple_kmeans = SimpleKmeansPython(num_cluster)
+        self.sp_kmeans = SimplePassKmeans(num_cluster)
                     
 
     # # Calculo dos cluters features ainda não utilizado, não sei bem como utilizar ainda, creio que ocorrerá mudanças
@@ -39,12 +41,23 @@ class Gerenciador(object):
     def novo_data_stream(self):
         self.executa = self.daoIO.pega_particao()
         self.kmeans = self.simple_kmeans.atualiza_kmeans(self.daoIO.particao)
+        self.kmeans = self.simple_kmeans.aplica_kmeans(self.daoIO.particao)
         
 
     # Plota o grafico resultante da aplicação do kmeans no conjuto de dados
     def plot_grafico(self):
         plt.scatter(self.daoIO.dados[:self.daoIO.pont_final, 0], self.daoIO.dados[:self.daoIO.pont_final,1], s = 100, c = self.simple_kmeans.labels)
         plt.scatter(self.simple_kmeans.centers[:, 0], self.simple_kmeans.centers[:, 1], s = 300, marker= '*', 
+                    c = 'red',label = 'Centroids')
+        plt.title('Iris Clusters and Centroids')
+        plt.xlabel('petal length in cm')
+        plt.ylabel(' petal width in cm')
+        plt.legend()
+        plt.show()
+
+        #meu proprio
+        plt.scatter(self.daoIO.dados[:self.daoIO.pont_final, 0], self.daoIO.dados[:self.daoIO.pont_final,1], s = 100, c = self.sp_kmeans.labels)
+        plt.scatter(self.sp_kmeans.centers[:, 0], self.sp_kmeans.centers[:, 1], s = 300, marker= '*', 
                     c = 'red',label = 'Centroids')
         plt.title('Iris Clusters and Centroids')
         plt.xlabel('petal length in cm')
@@ -83,10 +96,22 @@ class Gerenciador(object):
 
     # Aplica o kmeans no conjunto de dados
     def iniciar(self):
+        # kmeans biblioteca do python
         self.simple_kmeans.aplica_kmeans(self.daoIO.particao)
+        # Baseado no do amiguinho
+        self.sp_kmeans.inicia_kmeans(self.daoIO.particao)
+        self.sp_kmeans.aplica_kmeans(self.daoIO.particao)
+
         dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.particao, self.simple_kmeans.labels, self.simple_kmeans.centers)
         self.preencherClusters(dadosOrganizados)
 
 
     def mostra_estatisticas(self):
         self.simple_kmeans.estatisticas()
+
+    # def inicia_kmeansfeito(self, num_cluster, dados):
+    #     sp_kmeans = SimplePassKmeans(num_cluster)
+    #     sp_kmeans.inicia_kmeans(dados)
+
+    
+    # def atualiza_kmeansfeito(self, dados):
