@@ -3,26 +3,32 @@ import numpy as np
 from clusters.cluster import Cluster
 
 class SimplePassKmeans(object):
-    clusters  = []
+    clusters  = None
     labels = []
     data = None
+    centers = None
 
 
-    def __init__(self, randon_centers, num):
-        self.centers = randon_centers
+    def __init__(self, num):
+        # self.centers = randon_centers
         self.num_clusters = num
-        for num_cluster in range(0, self.num_clusters):
-            cluster = Cluster([])
-            self.clusters.append(cluster)
+        # for num_cluster in range(0, self.num_clusters):
+        #     cluster = Cluster([])
+        #     self.clusters.append(cluster)
+
+    def inicia_kmeans(self, dados):
+        n = np.size(dados, 0)
+        randon_centers =np.random.choice((0, n - 1), self.num_clusters)
+        self.centers = dados[randon_centers]
 
     
     def aplica_kmeans(self, dados):
         for item in dados:
-            cluster = self.k_means_update(item, self.num_clusters, self.clusters)
-            self.labels.append(c)
+            cluster = self.k_means_update(item, self.num_clusters, self.centers)
+            self.labels.append(cluster)
         
         
-    def k_means_update(self, point, k, cluster_means, cluster_counts = None):
+    def k_means_update(self, point, cluster_counts = None):
         """
     Does an online k-means update on a single data point.
 
@@ -38,11 +44,11 @@ class SimplePassKmeans(object):
 
     For initialization, random cluster means are needed.
     """
-        cluster_distances = np.zeros(k)
-        for cluster in range(k):
-            cluster_distances[cluster] = sum(np.sqrt((point - cluster_means[cluster])**2))
+        cluster_distances = np.zeros(self.num_clusters)
+        for cluster in range(self.num_clusters):
+            cluster_distances[cluster] = sum(np.sqrt((point - self.centers[cluster])**2))
         c = np.argmin(cluster_distances)
         if cluster_counts:
             cluster_counts[c] += 1
-        cluster_means[c] += 1.0/cluster_counts[c]*(point - cluster_means[c])
+        self.num_clusters[c] += 1.0/cluster_counts[c]*(point - self.num_clusters[c])
         return c
