@@ -1,10 +1,8 @@
 Linguagem :
 
-<<<<<<< HEAD
-- Python 3
-=======
+
 - Python 3.6
->>>>>>> 765a33ec7e71228e8dc80abbb1cac0b09f9f4927
+
 
 Instalações necessárias para rodar a aplicação:
 
