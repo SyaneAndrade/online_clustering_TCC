@@ -9,7 +9,7 @@ class Cluster(object):
     
     def __init__(self, dataset):
         self.dataset = dataset
-        # self.clusterFeat = ClusterFeatures(len(dataset))
+        self.clusterFeat = ClusterFeatures(len(dataset))
     
 
     def InicializaEstatisticas(self):
