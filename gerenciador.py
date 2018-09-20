@@ -55,7 +55,7 @@ class Gerenciador(object):
         plt.legend()
         plt.show()
 
-        #meu proprio
+    def plot_grafico_kmeans(self):
         plt.scatter(self.daoIO.dados[:self.daoIO.pont_final, 0], self.daoIO.dados[:self.daoIO.pont_final,1], s = 100, c = self.sp_kmeans.labels)
         plt.scatter(self.sp_kmeans.centers[:, 0], self.sp_kmeans.centers[:, 1], s = 300, marker= '*', 
                     c = 'red',label = 'Centroids')
