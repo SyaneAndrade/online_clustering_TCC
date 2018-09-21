@@ -39,14 +39,26 @@ class Gerenciador(object):
             self.executa = True
 
     def novo_data_stream(self):
-        self.executa = self.daoIO.pega_particao()
-        self.kmeans = self.simple_kmeans.atualiza_kmeans(self.daoIO.particao)
-        self.kmeans = self.simple_kmeans.aplica_kmeans(self.daoIO.particao)
+        # self.executa = self.daoIO.pega_particao()
+        self.executa = self.daoIO.cria_aleatorio()
+        self.kmeans = self.simple_kmeans.atualiza_kmeans(self.daoIO.randon_data)
+        self.kmeans = self.sp_kmeans.aplica_kmeans(self.daoIO.randon_data)
         
 
     # Plota o grafico resultante da aplicação do kmeans no conjuto de dados
     def plot_grafico(self):
         plt.scatter(self.daoIO.dados[:self.daoIO.pont_final, 0], self.daoIO.dados[:self.daoIO.pont_final,1], s = 100, c = self.simple_kmeans.labels)
+        plt.scatter(self.simple_kmeans.centers[:, 0], self.simple_kmeans.centers[:, 1], s = 300, marker= '*', 
+                    c = 'red',label = 'Centroids')
+        plt.title('Iris Clusters and Centroids')
+        plt.xlabel('petal length in cm')
+        plt.ylabel(' petal width in cm')
+        plt.legend()
+        plt.show()
+
+    # Plota o grafico resultante da aplicação do kmeans no conjuto de dados
+    def plot_grafico_radon(self):
+        plt.scatter(self.daoIO.randon_dados[:, 0], self.daoIO.randon_dados[:,1], s = 100, c = self.simple_kmeans.labels)
         plt.scatter(self.simple_kmeans.centers[:, 0], self.simple_kmeans.centers[:, 1], s = 300, marker= '*', 
                     c = 'red',label = 'Centroids')
         plt.title('Iris Clusters and Centroids')
@@ -97,12 +109,12 @@ class Gerenciador(object):
     # Aplica o kmeans no conjunto de dados
     def iniciar(self):
         # kmeans biblioteca do python
-        self.simple_kmeans.aplica_kmeans(self.daoIO.particao)
+        self.simple_kmeans.aplica_kmeans(self.daoIO.randon_data)
         # Baseado no do amiguinho
-        self.sp_kmeans.inicia_kmeans(self.daoIO.particao)
-        self.sp_kmeans.aplica_kmeans(self.daoIO.particao)
+        self.sp_kmeans.inicia_kmeans(self.daoIO.randon_data)
+        self.sp_kmeans.aplica_kmeans(self.daoIO.randon_data)
 
-        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.particao, self.simple_kmeans.labels, self.simple_kmeans.centers)
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.simple_kmeans.labels, self.simple_kmeans.centers)
         self.preencherClusters(dadosOrganizados)
 
 
