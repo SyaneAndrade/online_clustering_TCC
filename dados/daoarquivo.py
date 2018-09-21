@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 import sklearn.preprocessing
+from random import randint
+import numpy as np
 
 """
     DAO do arquivo, tem como parametro o caminho do arquivo
@@ -14,6 +16,10 @@ class DAOarquivo(object):
     num_part = None
     dataset = None
     particao = None
+    _rowAcess = []
+    randon_data = []
+    randon_dados = None
+
 
     def __init__(self, caminho_arquivo):
         self.arquivo = caminho_arquivo
@@ -43,11 +49,35 @@ class DAOarquivo(object):
         self.pont_inicial = 0
         self.pont_final = self.batch
         self.dados = self.normaliza_dados(self.dataset.iloc[:, 0:4].values)
-        self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+        # self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+        self.cria_aleatorio()
         return True
 
     
     def normaliza_dados(self, dados):
         minmax_scaler = sklearn.preprocessing.MinMaxScaler(feature_range=(0, 1))
-        return minmax_scaler.fit_transform(dados)
-        # return dados
+        # return minmax_scaler.fit_transform(dados)
+        return dados
+
+    def cria_aleatorio(self):
+        data = []
+        for index in range(0, self.batch):
+            pos = randint(0, len(self.dataset) - 1)
+            if(self.particao == None):
+                data.append(self.dados[pos])
+                self._rowAcess.append(pos)
+                # return True
+            else:
+                if(pos in self._rowAcess):
+                    continue
+                else:
+                    data.append(self.dados[pos])
+                    self._rowAcess.append(pos)
+                    if(len(self._rowAcess) == len(self.dados)):
+                        return False
+        self.randon_data = np.array(data)
+        if(self.randon_dados == None):
+            self.randon_dados = self.randon_data
+        else:
+            self.randon_dados = np.append(self.randon_dados, randon_data)
+        return True
