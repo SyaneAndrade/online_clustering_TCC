@@ -41,8 +41,8 @@ class Gerenciador(object):
     def novo_data_stream(self):
         # self.executa = self.daoIO.pega_particao()
         self.executa = self.daoIO.cria_aleatorio()
-        self.kmeans = self.simple_kmeans.atualiza_kmeans(self.daoIO.randon_data)
-        self.kmeans = self.sp_kmeans.aplica_kmeans(self.daoIO.randon_data)
+        self.simple_kmeans.atualiza_kmeans(self.daoIO.randon_data)
+        self.sp_kmeans.aplica_kmeans(self.daoIO.randon_data)
         
 
     # Plota o grafico resultante da aplicação do kmeans no conjuto de dados
