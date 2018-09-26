@@ -16,16 +16,20 @@ def main():
     gerenciador.inicia_dataset(caminho, 3)
     # Aplica o algoritimo kmenas nos dados
     gerenciador.iniciar()
-    gerenciador.plot_grafico()
-    gerenciador.plot_grafico_kmeans()
+    # gerenciador.plot_grafico()
+    # gerenciador.plot_grafico_kmeans()
+    gerenciador.plot_grafico_radon()
+    gerenciador.plot_grafico_radon_sp()
 
     while(gerenciador.executa):
         #Plota o grafico mostrando a distribuição dos dados nos clusters
         # Aplica o algoritimo kmenas nos dados
         gerenciador.novo_data_stream()
         #Plota o grafico mostrando a distribuição dos dados nos clusters
-        gerenciador.plot_grafico()
-        gerenciador.plot_grafico_kmeans()
+        # gerenciador.plot_grafico()
+        # gerenciador.plot_grafico_kmeans()
+        gerenciador.plot_grafico_radon()
+        gerenciador.plot_grafico_radon_sp()
         # print(gerenciador.simple_kmeans.centers)
         print('\n\n')
     gerenciador.mostra_estatisticas()
