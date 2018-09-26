@@ -64,7 +64,7 @@ class DAOarquivo(object):
         for index in range(0, self.batch):
             pos = randint(0, len(self.dataset) - 1)
             if(self.particao == None):
-                data.append(self.dados[pos])
+                data.append(self.dados[pos,:])
                 self._rowAcess.append(pos)
                 # return True
             else:
@@ -76,8 +76,10 @@ class DAOarquivo(object):
                     if(len(self._rowAcess) == len(self.dados)):
                         return False
         self.randon_data = np.array(data)
-        if(self.randon_dados == None):
+        if(self.randon_dados is None):
             self.randon_dados = self.randon_data
         else:
-            self.randon_dados = np.append(self.randon_dados, randon_data)
+            self.randon_dados = np.append(self.randon_dados, self.randon_data, axis=0)
+            if(len(self.randon_dados) == len(self.dados)):
+                return False
         return True
