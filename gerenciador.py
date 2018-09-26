@@ -67,6 +67,16 @@ class Gerenciador(object):
         plt.legend()
         plt.show()
 
+    def plot_grafico_radon_sp(self):
+        plt.scatter(self.daoIO.randon_dados[:, 0], self.daoIO.randon_dados[:,1], s = 100, c = self.sp_kmeans.labels)
+        plt.scatter(self.sp_kmeans.centers[:, 0], self.sp_kmeans.centers[:, 1], s = 300, marker= '*', 
+                    c = 'red',label = 'Centroids')
+        plt.title('Iris Clusters and Centroids')
+        plt.xlabel('petal length in cm')
+        plt.ylabel(' petal width in cm')
+        plt.legend()
+        plt.show()
+
     def plot_grafico_kmeans(self):
         plt.scatter(self.daoIO.dados[:self.daoIO.pont_final, 0], self.daoIO.dados[:self.daoIO.pont_final,1], s = 100, c = self.sp_kmeans.labels)
         plt.scatter(self.sp_kmeans.centers[:, 0], self.sp_kmeans.centers[:, 1], s = 300, marker= '*', 
