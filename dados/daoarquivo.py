@@ -61,9 +61,10 @@ class DAOarquivo(object):
 
     def cria_aleatorio(self):
         data = []
-        for index in range(0, self.batch):
+        index = 0
+        while(index < self.batch):
             pos = randint(0, len(self.dataset) - 1)
-            if(self.particao == None):
+            if(data == []):
                 data.append(self.dados[pos,:])
                 self._rowAcess.append(pos)
                 # return True
@@ -73,8 +74,9 @@ class DAOarquivo(object):
                 else:
                     data.append(self.dados[pos])
                     self._rowAcess.append(pos)
-                    if(len(self._rowAcess) == len(self.dados)):
-                        return False
+                    # if(len(self._rowAcess) == len(self.dados)):
+                    #     return False
+            index = index + 1
         self.randon_data = np.array(data)
         if(self.randon_dados is None):
             self.randon_dados = self.randon_data
