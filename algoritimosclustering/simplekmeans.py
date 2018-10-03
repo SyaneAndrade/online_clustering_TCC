@@ -47,6 +47,7 @@ class SimpleKmeansPython(object):
         print(self.labels)
         print("\nAccuracy")
         print(smetrics.accuracy_score(self.predict, self.labels))
+        print(smetrics.adjusted_mutual_info_score(self.predict, self.labels))
         print("\n\nDados Predict")
         print("\nCentroides")
         print(self.predict_centers)
