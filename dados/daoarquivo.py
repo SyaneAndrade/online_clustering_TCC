@@ -49,7 +49,7 @@ class DAOarquivo(object):
         self.pont_inicial = 0
         self.pont_final = self.batch
         self.dados = self.normaliza_dados(self.dataset.iloc[:, 0:4].values)
-        # self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+        self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
         self.cria_aleatorio()
         return True
 
@@ -74,8 +74,6 @@ class DAOarquivo(object):
                 else:
                     data.append(self.dados[pos])
                     self._rowAcess.append(pos)
-                    # if(len(self._rowAcess) == len(self.dados)):
-                    #     return False
             index = index + 1
         self.randon_data = np.array(data)
         if(self.randon_dados is None):

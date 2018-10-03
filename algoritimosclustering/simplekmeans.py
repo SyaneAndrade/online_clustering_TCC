@@ -23,21 +23,12 @@ class SimpleKmeansPython(object):
         if (self.labels is None):
             self.labels = self.kmeans.labels_
         else:
-            # print("criacao labels")
-            # print(self.labels)
-            # print(self.kmeans.labels_)
-            # print("\n")
-            # print("label apos append")
             self.labels = np.append(self.labels, self.kmeans.labels_)
-            # print(self.labels)
-            # print("\n\n")
-            # pdb.set_trace()
         self.centers = self.kmeans.cluster_centers_
         self.T = self.kmeans.cluster_centers_.T
 
     def atualiza_kmeans(self, dados):
-        # self.kmeans = KMeans(n_clusters=self.n_cluster, init=self.centers)
-        self.kmeans = KMeans(n_clusters=self.n_cluster, init=self.centers, n_init=10)
+        self.kmeans = KMeans(n_clusters=self.n_cluster, init=self.centers)
         self.aplica_kmeans(dados)
     
     def verdadeira_estatistica(self, dados):

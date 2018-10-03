@@ -18,15 +18,7 @@ class Gerenciador(object):
     def __init__(self, num_cluster):
         self.simple_kmeans = SimpleKmeansPython(num_cluster)
         self.sp_kmeans = SimplePassKmeans(num_cluster)
-                    
-
-    # # Calculo dos cluters features ainda não utilizado, não sei bem como utilizar ainda, creio que ocorrerá mudanças
-    # def cria_estatisticas(self, dados):
-    #     DatasetFeatures = DAOdataset(dados)
-    #     DatasetFeatures.InicializaEstatisticas()
-    #     for item in DatasetFeatures.clusterFeat.SS:
-    #         print item
-
+    
 
     # Responsável por iniciar os dados vindo do csv
     def inicia_dataset(self, caminho, particao_final = 10):
@@ -37,6 +29,7 @@ class Gerenciador(object):
         self.simple_kmeans.verdadeira_estatistica(self.daoIO.dados)
         if(particao_final > 1):
             self.executa = True
+
 
     def novo_data_stream(self):
         # self.executa = self.daoIO.pega_particao()
@@ -56,6 +49,7 @@ class Gerenciador(object):
         plt.legend()
         plt.show()
 
+
     # Plota o grafico resultante da aplicação do kmeans no conjuto de dados
     def plot_grafico_radon(self):
         plt.scatter(self.daoIO.randon_dados[:, 0], self.daoIO.randon_dados[:,1], s = 100, c = self.simple_kmeans.labels)
@@ -67,6 +61,7 @@ class Gerenciador(object):
         plt.legend()
         plt.show()
     
+
     def plot_grafico_radon_sp(self):
         plt.scatter(self.daoIO.randon_dados[:, 0], self.daoIO.randon_dados[:,1], s = 100, c = self.sp_kmeans.labels)
         plt.scatter(self.sp_kmeans.centers[:, 0], self.sp_kmeans.centers[:, 1], s = 300, marker= '*', 
@@ -76,6 +71,7 @@ class Gerenciador(object):
         plt.ylabel(' petal width in cm')
         plt.legend()
         plt.show()
+
 
     def plot_grafico_kmeans(self):
         plt.scatter(self.daoIO.dados[:self.daoIO.pont_final, 0], self.daoIO.dados[:self.daoIO.pont_final,1], s = 100, c = self.sp_kmeans.labels)
@@ -87,9 +83,11 @@ class Gerenciador(object):
         plt.legend()
         plt.show()
     
+
     def criarCluster(self, dados, centroids):
         return Cluster(dados)
     
+
     def preencherClusters(self, dadosOrganizados):
         if(self.simple_kmeans.clusters is None):
             for cluster in dadosOrganizados:
@@ -130,10 +128,3 @@ class Gerenciador(object):
 
     def mostra_estatisticas(self):
         self.simple_kmeans.estatisticas()
-
-    # def inicia_kmeansfeito(self, num_cluster, dados):
-    #     sp_kmeans = SimplePassKmeans(num_cluster)
-    #     sp_kmeans.inicia_kmeans(dados)
-
-    
-    # def atualiza_kmeansfeito(self, dados):
