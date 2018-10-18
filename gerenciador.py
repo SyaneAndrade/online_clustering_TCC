@@ -39,52 +39,7 @@ class Gerenciador(object):
         self.simple_kmeans.atualiza_kmeans(self.daoIO.randon_data)
         self.sp_kmeans.aplica_kmeans(self.daoIO.randon_data)
         self.birch.aplica_birch(self.daoIO.randon_data)
-        
 
-    # Plota o grafico resultante da aplicação do kmeans no conjuto de dados
-    def plot_grafico(self):
-        plt.scatter(self.daoIO.dados[:self.daoIO.pont_final, 0], self.daoIO.dados[:self.daoIO.pont_final,1], s = 100, c = self.simple_kmeans.labels)
-        plt.scatter(self.simple_kmeans.centers[:, 0], self.simple_kmeans.centers[:, 1], s = 300, marker= '*', 
-                    c = 'red',label = 'Centroids')
-        plt.title('Iris Clusters and Centroids')
-        plt.xlabel('petal length in cm')
-        plt.ylabel(' petal width in cm')
-        plt.legend()
-        plt.show()
-
-
-    # Plota o grafico resultante da aplicação do kmeans no conjuto de dados
-    def plot_grafico_radon(self):
-        plt.scatter(self.daoIO.randon_dados[:, 0], self.daoIO.randon_dados[:,1], s = 100, c = self.simple_kmeans.labels)
-        plt.scatter(self.simple_kmeans.centers[:, 0], self.simple_kmeans.centers[:, 1], s = 300, marker= '*', 
-                    c = 'red',label = 'Centroids')
-        plt.title('Iris Clusters and Centroids')
-        plt.xlabel('petal length in cm')
-        plt.ylabel(' petal width in cm')
-        plt.legend()
-        plt.show()
-    
-
-    def plot_grafico_radon_sp(self):
-        plt.scatter(self.daoIO.randon_dados[:, 0], self.daoIO.randon_dados[:,1], s = 100, c = self.sp_kmeans.labels)
-        plt.scatter(self.sp_kmeans.centers[:, 0], self.sp_kmeans.centers[:, 1], s = 300, marker= '*', 
-                    c = 'red',label = 'Centroids')
-        plt.title('Iris Clusters and Centroids')
-        plt.xlabel('petal length in cm')
-        plt.ylabel(' petal width in cm')
-        plt.legend()
-        plt.show()
-
-
-    def plot_grafico_kmeans(self):
-        plt.scatter(self.daoIO.dados[:self.daoIO.pont_final, 0], self.daoIO.dados[:self.daoIO.pont_final,1], s = 100, c = self.sp_kmeans.labels)
-        plt.scatter(self.sp_kmeans.centers[:, 0], self.sp_kmeans.centers[:, 1], s = 300, marker= '*', 
-                    c = 'red',label = 'Centroids')
-        plt.title('Iris Clusters and Centroids')
-        plt.xlabel('petal length in cm')
-        plt.ylabel(' petal width in cm')
-        plt.legend()
-        plt.show()
 
     def plot_grafico_clustering(self, labels, centers, name):
         plt.scatter(self.daoIO.randon_dados[:, 0], self.daoIO.randon_dados[:,1], s = 100, c = labels)
@@ -95,7 +50,6 @@ class Gerenciador(object):
         plt.legend()
         plt.show()
 
-    
 
     def criarCluster(self, dados, centroids):
         return Cluster(dados)
