@@ -16,7 +16,6 @@ class BirchAlgo(object):
 
     def aplica_birch(self, dados):
         self.birch.partial_fit(dados)
-        print(self.birch.labels_)
         if (self.labels is None):
             self.labels = self.birch.labels_
         else:
