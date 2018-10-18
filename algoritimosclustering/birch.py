@@ -22,7 +22,6 @@ class BirchAlgo(object):
         else:
             self.labels = np.append(self.labels, self.birch.labels_)
         self.centers = self.birch.subcluster_centers_
-        # self.T = self.birch.subcluster_labels_
 
     def atualiza_kmeans(self, dados):
         self.aplica_birch(dados)
