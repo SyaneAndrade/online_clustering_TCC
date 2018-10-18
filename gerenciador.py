@@ -6,6 +6,7 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 from algoritimosclustering.simplekmeans import SimpleKmeansPython
 from algoritimosclustering.simplekmeansmake import SimplePassKmeans
+from algoritimosclustering.birch import BirchAlgo
 
 class Gerenciador(object):
     """
@@ -18,6 +19,7 @@ class Gerenciador(object):
     def __init__(self, num_cluster):
         self.simple_kmeans = SimpleKmeansPython(num_cluster)
         self.sp_kmeans = SimplePassKmeans(num_cluster)
+        self.birch = BirchAlgo()
     
 
     # Responsável por iniciar os dados vindo do csv
@@ -36,6 +38,7 @@ class Gerenciador(object):
         self.executa = self.daoIO.cria_aleatorio()
         self.simple_kmeans.atualiza_kmeans(self.daoIO.randon_data)
         self.sp_kmeans.aplica_kmeans(self.daoIO.randon_data)
+        self.birch.aplica_birch(self.daoIO.randon_data)
         
 
     # Plota o grafico resultante da aplicação do kmeans no conjuto de dados
@@ -121,6 +124,8 @@ class Gerenciador(object):
         # Baseado no do amiguinho
         self.sp_kmeans.inicia_kmeans(self.daoIO.randon_data)
         self.sp_kmeans.aplica_kmeans(self.daoIO.randon_data)
+        #BIRCH
+        self.birch.aplica_birch(self.daoIO.randon_data)
 
         dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.simple_kmeans.labels, self.simple_kmeans.centers)
         self.preencherClusters(dadosOrganizados)
