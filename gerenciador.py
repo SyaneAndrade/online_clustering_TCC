@@ -85,6 +85,16 @@ class Gerenciador(object):
         plt.ylabel(' petal width in cm')
         plt.legend()
         plt.show()
+
+    def plot_grafico_clustering(self, labels, centers, name):
+        plt.scatter(self.daoIO.randon_dados[:, 0], self.daoIO.randon_dados[:,1], s = 100, c = labels)
+        plt.scatter(centers[:, 0], centers[:, 1], s = 300, marker='*', c= 'red', label='Centroids')
+        plt.title('Iris ' + name + 'Clustering Algorithm')
+        plt.xlabel('petal length in cm')
+        plt.ylabel('petal width in cm')
+        plt.legend()
+        plt.show()
+
     
 
     def criarCluster(self, dados, centroids):
