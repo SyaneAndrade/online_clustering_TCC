@@ -1,0 +1,23 @@
+Leader alghorthims
+
+marjority voting
+
+best one elements moves
+
+tempo disponivel aproximadamente 60 dias
+
+terminar e testar o experimento ( testar as 3 funcoes de online clustering)
+
+implementar as duas funções de ensemble
+
+rodar os testes
+
+escrever
+
+preparar a apresentação
+
+14/12
+
+21/ 21 dezembro
+
+
