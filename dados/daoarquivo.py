@@ -56,7 +56,7 @@ class DAOarquivo(object):
     
     def normaliza_dados(self, dados):
         minmax_scaler = sklearn.preprocessing.MinMaxScaler(feature_range=(0, 1))
-        return minmax_scaler.fit_transform(dados)
+        # return minmax_scaler.fit_transform(dados)
         return dados
 
     def cria_aleatorio(self):
