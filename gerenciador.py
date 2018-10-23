@@ -18,8 +18,8 @@ class Gerenciador(object):
 
     def __init__(self, num_cluster):
         self.simple_kmeans = SimpleKmeansPython(num_cluster)
-        self.sp_kmeans = SimplePassKmeans(num_cluster)
-        self.birch = BirchAlgo()
+        self.sp_kmeans = SimplePassKmeans(threshold=6.0)
+        self.birch = BirchAlgo(threshold=1.2)
     
 
     # Responsável por iniciar os dados vindo do csv
