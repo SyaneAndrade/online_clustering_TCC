@@ -41,3 +41,6 @@ if __name__ == '__main__':
     # https://github.com/Hareric/ClusterTool
 
     # http://hareric.com/2016/07/06/%E4%B8%80%E8%B6%9F%E8%81%9A%E7%B1%BB(One-Pass%20Cluster)%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/
+
+    # https://github.com/yz-cnsdqz/dynamic_clustering
+    
