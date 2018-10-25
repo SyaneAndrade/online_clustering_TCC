@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from algoritimosclustering.simplekmeans import SimpleKmeansPython
 from algoritimosclustering.simplekmeansmake import SimplePassKmeans
 from algoritimosclustering.birch import BirchAlgo
+from algoritimosclustering.leader import TheLeaderAlgorithm
 
 class Gerenciador(object):
     """
@@ -18,8 +19,9 @@ class Gerenciador(object):
 
     def __init__(self, num_cluster):
         self.simple_kmeans = SimpleKmeansPython(num_cluster)
-        self.sp_kmeans = SimplePassKmeans(threshold=6.0)
-        self.birch = BirchAlgo(threshold=1.2)
+        self.sp_kmeans = SimplePassKmeans(num_cluster)
+        self.birch = BirchAlgo(threshold=1.0)
+        self.leader = TheLeaderAlgorithm(threshold=4.5)
     
 
     # Responsável por iniciar os dados vindo do csv
@@ -39,12 +41,13 @@ class Gerenciador(object):
         self.simple_kmeans.atualiza_kmeans(self.daoIO.randon_data)
         self.sp_kmeans.aplica_kmeans(self.daoIO.randon_data)
         self.birch.aplica_birch(self.daoIO.randon_data)
+        self.leader.aplica_leader(self.daoIO.randon_data)
 
 
     def plot_grafico_clustering(self, labels, centers, name):
         plt.scatter(self.daoIO.randon_dados[:, 0], self.daoIO.randon_dados[:,1], s = 100, c = labels)
         plt.scatter(centers[:, 0], centers[:, 1], s = 300, marker='*', c= 'red', label='Centroids')
-        plt.title('Iris ' + name + 'Clustering Algorithm')
+        plt.title('Iris ' + name + ' Clustering Algorithm')
         plt.xlabel('petal length in cm')
         plt.ylabel('petal width in cm')
         plt.legend()
@@ -90,6 +93,8 @@ class Gerenciador(object):
         self.sp_kmeans.aplica_kmeans(self.daoIO.randon_data)
         #BIRCH
         self.birch.aplica_birch(self.daoIO.randon_data)
+        #The Leader alghortm
+        self.leader.aplica_leader(self.daoIO.randon_data)
 
         dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.simple_kmeans.labels, self.simple_kmeans.centers)
         self.preencherClusters(dadosOrganizados)
