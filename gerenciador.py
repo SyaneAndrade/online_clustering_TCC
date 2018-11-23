@@ -76,7 +76,7 @@ class Gerenciador(object):
     def preencherClusters(self, dadosOrganizados, algoritmoCluster):
         if(algoritmoCluster.clusters is None):
             for cluster in dadosOrganizados:
-                novoCluster = self.criarCluster(dadosOrganizados[cluster]['dados'], 'Sem centroid')
+                novoCluster = Cluster(dadosOrganizados[cluster]['dados'], dadosOrganizados[cluster]['centroid'])
                 algoritmoCluster.clusters.append(novoCluster)
         else:
             for index in  range(0, len(algoritmoCluster.clusters)):
@@ -112,6 +112,7 @@ class Gerenciador(object):
         self.leader.aplica_leader(self.daoIO.randon_data)
 
         self.criarCluster()
+
 
     def mostra_estatisticas(self):
         self.simple_kmeans.estatisticas()

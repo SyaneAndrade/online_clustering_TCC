@@ -10,8 +10,9 @@ class Cluster(object):
     """
     centroide = None
     
-    def __init__(self, dataset):
+    def __init__(self, dataset, centroide):
         self.buffering = dataset
+        self.centroide = centroide
         self.clusterFeat = ClusterFeatures()
     
 
