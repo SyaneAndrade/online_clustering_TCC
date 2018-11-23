@@ -3,7 +3,7 @@ import numpy as np
 from clusters.cluster import Cluster
 
 class TheLeaderAlgorithm(object):
-    clusters  = None
+    clusters  = []
     labels = []
     data = None
     _centers = []

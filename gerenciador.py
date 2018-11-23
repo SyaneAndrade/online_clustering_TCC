@@ -54,18 +54,33 @@ class Gerenciador(object):
         plt.show()
 
 
-    def criarCluster(self, dados, centroids):
-        return Cluster(dados)
+    def criarCluster(self):
+
+        #Kmeans do scitlearn
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.simple_kmeans.labels, self.simple_kmeans.centers)
+        self.preencherClusters(dadosOrganizados, self.simple_kmeans)
+
+        #Kmeans baseado de um codigo na internet
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.sp_kmeans.labels, self.sp_kmeans.centers)
+        self.preencherClusters(dadosOrganizados, self.sp_kmeans)
+
+        #Birch do scitlearn
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.birch.labels, self.birch.centers)
+        self.preencherClusters(dadosOrganizados, self.birch)
+
+        #Leader baseado em um algoritimo na internet
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.leader.labels, self.leader.centers)
+        self.preencherClusters(dadosOrganizados, self.leader)
     
 
-    def preencherClusters(self, dadosOrganizados):
-        if(self.simple_kmeans.clusters is None):
+    def preencherClusters(self, dadosOrganizados, algoritmoCluster):
+        if(algoritmoCluster.clusters is None):
             for cluster in dadosOrganizados:
                 novoCluster = self.criarCluster(dadosOrganizados[cluster]['dados'], 'Sem centroid')
-                self.simple_kmeans.clusters.append(novoCluster)
+                algoritmoCluster.clusters.append(novoCluster)
         else:
-            for index in  range(0, len(self.simple_kmeans.clusters)):
-                self.simple_kmeans.clusters.append(dadosOrganizados[index]['dados'])
+            for index in  range(0, len(algoritmoCluster.clusters)):
+                algoritmoCluster.clusters.append(dadosOrganizados[index]['dados'])
 
     
     def pegaClustersOrganizados(self, dadosRecebidos, labels, centroids):
@@ -96,9 +111,7 @@ class Gerenciador(object):
         #The Leader alghortm
         self.leader.aplica_leader(self.daoIO.randon_data)
 
-        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.simple_kmeans.labels, self.simple_kmeans.centers)
-        self.preencherClusters(dadosOrganizados)
-
+        self.criarCluster()
 
     def mostra_estatisticas(self):
         self.simple_kmeans.estatisticas()
