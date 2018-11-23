@@ -10,11 +10,11 @@ class ClusterFeatures(object):
     LS -> vetor de mesma dimensão dos dados contendo a soma linear dos N itens
     """
     
-    SS = []
-    LS = []
+    SS = None
+    LS = None
     N = 0
     Raio = 0
-    Centroide = []
+    Centroide = None
 
     # Método responsável por calcular a soma dos quadrados de todos os itens no vetor SS
     def CalSquare(self, data):
@@ -42,6 +42,3 @@ class ClusterFeatures(object):
             self.N = len(data)
             return True
         return False
-
-    def __init__(self,  tamanhoDataset):
-        self.N = tamanhoDataset
