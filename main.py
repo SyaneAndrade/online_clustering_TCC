@@ -31,6 +31,7 @@ def main():
         gerenciador.plot_grafico_clustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH")
         gerenciador.plot_grafico_clustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm")
         print('\n\n')
+    gerenciador.criarCluster()
     gerenciador.mostra_estatisticas()
 
 

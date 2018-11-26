@@ -5,6 +5,7 @@ from clusters.cluster import Cluster
 class SimplePassKmeans(object):
     clusters  = []
     labels = []
+    labels_temporary = None
     data = None
     centers = None
     cluster_counts = None
@@ -21,9 +22,11 @@ class SimplePassKmeans(object):
 
     
     def aplica_kmeans(self, dados):
+        labels_temporary  = []
         for item in dados:
             cluster = self.k_means_update(item)
             self.labels.append(cluster)
+            self.labels_temporary.append(cluster)
         
         
     def k_means_update(self, point, cluster_counts = None):

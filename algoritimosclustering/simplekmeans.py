@@ -8,6 +8,7 @@ class SimpleKmeansPython(object):
     clusters  = []
     centers = None
     labels = None
+    labels_temporary = None
     T = None
     predict = None
     predict_centers = None
@@ -22,8 +23,10 @@ class SimpleKmeansPython(object):
         self.kmeans.fit(dados)
         if (self.labels is None):
             self.labels = self.kmeans.labels_
+            self.labels_temporary = self.kmeans.labels_
         else:
             self.labels = np.append(self.labels, self.kmeans.labels_)
+            self.labels_temporary = self.kmeans.labels_
         self.centers = self.kmeans.cluster_centers_
         self.T = self.kmeans.cluster_centers_.T
 

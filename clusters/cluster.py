@@ -8,10 +8,10 @@ class Cluster(object):
         Estrutura para acesso, leitura e atualizações dos dados do conjunto,
         assim como também suas características estatísticas
     """
-    centroide = None
+    # centroide = None
     
     def __init__(self, dataset, centroide):
-        self.buffering = dataset
+        self.dataset = dataset
         self.centroide = centroide
         self.clusterFeat = ClusterFeatures()
     
@@ -30,8 +30,8 @@ class Cluster(object):
     
 
     def AtualizaDados(self, new_item):
-        if(new_item not in self.buffering):
-            self.dataset.np.append(new_item)
+        # if(new_item not in self.buffering):
+        np.append(self.dataset, new_item)
     
 
     def AcessaDado(self, posicao):

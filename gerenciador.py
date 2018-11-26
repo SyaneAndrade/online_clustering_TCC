@@ -4,6 +4,7 @@ from clusters.clusterfeatures import ClusterFeatures
 from dados.daoarquivo import DAOarquivo
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
+import numpy as np
 from algoritimosclustering.simplekmeans import SimpleKmeansPython
 from algoritimosclustering.simplekmeansmake import SimplePassKmeans
 from algoritimosclustering.birch import BirchAlgo
@@ -42,6 +43,7 @@ class Gerenciador(object):
         self.sp_kmeans.aplica_kmeans(self.daoIO.randon_data)
         self.birch.aplica_birch(self.daoIO.randon_data)
         self.leader.aplica_leader(self.daoIO.randon_data)
+        # self.criarCluster()
 
 
     def plot_grafico_clustering(self, labels, centers, name):
@@ -57,30 +59,31 @@ class Gerenciador(object):
     def criarCluster(self):
 
         #Kmeans do scitlearn
-        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.simple_kmeans.labels, self.simple_kmeans.centers)
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_dados, self.simple_kmeans.labels, self.simple_kmeans.centers)
         self.preencherClusters(dadosOrganizados, self.simple_kmeans)
 
         #Kmeans baseado de um codigo na internet
-        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.sp_kmeans.labels, self.sp_kmeans.centers)
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_dados, self.sp_kmeans.labels, self.sp_kmeans.centers)
         self.preencherClusters(dadosOrganizados, self.sp_kmeans)
 
         #Birch do scitlearn
-        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.birch.labels, self.birch.centers)
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_dados, self.birch.labels, self.birch.centers)
         self.preencherClusters(dadosOrganizados, self.birch)
 
         #Leader baseado em um algoritimo na internet
-        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.leader.labels, self.leader.centers)
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_dados, self.leader.labels, self.leader.centers)
         self.preencherClusters(dadosOrganizados, self.leader)
     
 
     def preencherClusters(self, dadosOrganizados, algoritmoCluster):
-        if(algoritmoCluster.clusters is None):
+        if(algoritmoCluster.clusters == []):
             for cluster in dadosOrganizados:
-                novoCluster = Cluster(dadosOrganizados[cluster]['dados'], dadosOrganizados[cluster]['centroid'])
+                novoCluster = Cluster(np.array(dadosOrganizados[cluster]['dados']), dadosOrganizados[cluster]['centroid'])
                 algoritmoCluster.clusters.append(novoCluster)
         else:
             for index in  range(0, len(algoritmoCluster.clusters)):
-                algoritmoCluster.clusters.append(dadosOrganizados[index]['dados'])
+                algoritmoCluster.clusters[index].AtualizaDados(np.array(dadosOrganizados[index]['dados']))
+                algoritmoCluster.clusters[index].centroide = dadosOrganizados[index]['centroid']
 
     
     def pegaClustersOrganizados(self, dadosRecebidos, labels, centroids):
@@ -95,7 +98,6 @@ class Gerenciador(object):
         # Colocando os dados
         for index in range(len(dadosRecebidos)):
             dadosAgregados[labels[index]]['dados'].append(dadosRecebidos[index])
-
         return dadosAgregados
     
 
@@ -111,7 +113,7 @@ class Gerenciador(object):
         #The Leader alghortm
         self.leader.aplica_leader(self.daoIO.randon_data)
 
-        self.criarCluster()
+        # self.criarCluster()
 
 
     def mostra_estatisticas(self):
