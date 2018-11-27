@@ -79,11 +79,13 @@ class Gerenciador(object):
         if(algoritmoCluster.clusters == []):
             for cluster in dadosOrganizados:
                 novoCluster = Cluster(np.array(dadosOrganizados[cluster]['dados']), dadosOrganizados[cluster]['centroid'])
+                novoCluster.AtualizaEstatisticas()
                 algoritmoCluster.clusters.append(novoCluster)
         else:
             for index in  range(0, len(algoritmoCluster.clusters)):
                 algoritmoCluster.clusters[index].AtualizaDados(np.array(dadosOrganizados[index]['dados']))
                 algoritmoCluster.clusters[index].centroide = dadosOrganizados[index]['centroid']
+                algoritmoCluster.clusters[index].AtualizaEstatisticas()
 
     
     def pegaClustersOrganizados(self, dadosRecebidos, labels, centroids):

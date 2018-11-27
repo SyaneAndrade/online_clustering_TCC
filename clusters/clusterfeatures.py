@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import math
+import numpy as np
 
 class ClusterFeatures(object):
     """
@@ -18,15 +19,14 @@ class ClusterFeatures(object):
 
     # Método responsável por calcular a soma dos quadrados de todos os itens no vetor SS
     def CalSquare(self, data):
-        self.SS.append(pow(data[0], 2))
-        for i in range(1, self.N):
-            self.SS.append(self.SS[i-1] + pow(data[i], 2))
+       self.SS = np.sum(np.square(data), axis=0)
 
     #Método responsável por calcular a soma dos quadrados de todos os itens no vetor LS
     def CalSomaLinear(self, data):
-        self.LS.append(data[0])
-        for i in range(1, self.N):
-            self.LS.append(self.LS[i - 1] + data[i])
+       self.LS = np.sum(data, axis=0)
+    
+    def tamanho(self, data):
+        self.N = len(data)
 
     """
     Se um novo item x é adcionado ao conjunto de dados

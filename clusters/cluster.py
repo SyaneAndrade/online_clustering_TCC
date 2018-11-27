@@ -16,12 +16,10 @@ class Cluster(object):
         self.clusterFeat = ClusterFeatures()
     
 
-    def InicializaEstatisticas(self):
+    def AtualizaEstatisticas(self):
         self.clusterFeat.CalSomaLinear(self.dataset)
         self.clusterFeat.CalSquare(self.dataset)
-
-    def AtualizaEstatisticas(self):
-        self.clusterFeat.AtualizaEstatistica(self.dataset)
+        self.clusterFeat.tamanho(self.dataset)
     
 
     def PrintDataSet(self):
