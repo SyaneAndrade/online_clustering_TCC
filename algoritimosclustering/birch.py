@@ -8,6 +8,7 @@ class BirchAlgo(object):
     labels = None
     clusters = []
     centers = None
+    labels_temporary = None
     
     def __init__(self, threshold = 0.5):
         self.birch = Birch(threshold=threshold, n_clusters=None, compute_labels=True)
@@ -18,8 +19,10 @@ class BirchAlgo(object):
         self.birch.partial_fit(dados)
         if (self.labels is None):
             self.labels = self.birch.labels_
+            self.labels_temporary = self.birch.labels_
         else:
             self.labels = np.append(self.labels, self.birch.labels_)
+            self.labels_temporary = self.birch.labels_
         self.centers = self.birch.subcluster_centers_
 
     def atualiza_kmeans(self, dados):

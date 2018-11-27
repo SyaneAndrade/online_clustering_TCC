@@ -20,6 +20,7 @@ def main():
     gerenciador.plot_grafico_clustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me")
     gerenciador.plot_grafico_clustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH")
     gerenciador.plot_grafico_clustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm")
+    gerenciador.criarCluster()
 
     while(gerenciador.executa):
         #Plota o grafico mostrando a distribuição dos dados nos clusters
@@ -31,7 +32,7 @@ def main():
         gerenciador.plot_grafico_clustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH")
         gerenciador.plot_grafico_clustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm")
         print('\n\n')
-    gerenciador.criarCluster()
+        gerenciador.criarCluster()
     gerenciador.mostra_estatisticas()
 
 

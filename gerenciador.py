@@ -59,19 +59,19 @@ class Gerenciador(object):
     def criarCluster(self):
 
         #Kmeans do scitlearn
-        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_dados, self.simple_kmeans.labels, self.simple_kmeans.centers)
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.simple_kmeans.labels_temporary, self.simple_kmeans.centers)
         self.preencherClusters(dadosOrganizados, self.simple_kmeans)
 
         #Kmeans baseado de um codigo na internet
-        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_dados, self.sp_kmeans.labels, self.sp_kmeans.centers)
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.sp_kmeans.labels, self.sp_kmeans.centers)
         self.preencherClusters(dadosOrganizados, self.sp_kmeans)
 
         #Birch do scitlearn
-        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_dados, self.birch.labels, self.birch.centers)
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.birch.labels, self.birch.centers)
         self.preencherClusters(dadosOrganizados, self.birch)
 
         #Leader baseado em um algoritimo na internet
-        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_dados, self.leader.labels, self.leader.centers)
+        dadosOrganizados = self.pegaClustersOrganizados(self.daoIO.randon_data, self.leader.labels, self.leader.centers)
         self.preencherClusters(dadosOrganizados, self.leader)
     
 
@@ -97,7 +97,7 @@ class Gerenciador(object):
             }
         # Colocando os dados
         for index in range(len(dadosRecebidos)):
-            dadosAgregados[labels[index]]['dados'].append(dadosRecebidos[index])
+            dadosAgregados[labels[index]]['dados'].append(dadosRecebidos[index,:])
         return dadosAgregados
     
 
@@ -112,8 +112,6 @@ class Gerenciador(object):
         self.birch.aplica_birch(self.daoIO.randon_data)
         #The Leader alghortm
         self.leader.aplica_leader(self.daoIO.randon_data)
-
-        # self.criarCluster()
 
 
     def mostra_estatisticas(self):

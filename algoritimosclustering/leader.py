@@ -5,6 +5,7 @@ from clusters.cluster import Cluster
 class TheLeaderAlgorithm(object):
     clusters  = []
     labels = []
+    labels_temporary = None
     data = None
     _centers = []
     centers = None
@@ -20,9 +21,11 @@ class TheLeaderAlgorithm(object):
 
     
     def aplica_leader(self, dados):
+        self.labels_temporary = []
         for item in dados:
             cluster = self.leader_update(item)
             self.labels.append(cluster)
+            self.labels_temporary.append(cluster)
         self.centers = np.array(self._centers)
         
         
