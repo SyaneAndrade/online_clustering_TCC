@@ -2,6 +2,7 @@
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 from gerenciador import Gerenciador
+from helper.funcoesaux import plot_grafico_clustering
 
 
 
@@ -16,10 +17,10 @@ def main():
     gerenciador.inicia_dataset(caminho, 3)
     # Aplica o algoritimo kmenas nos dados
     gerenciador.iniciar()
-    gerenciador.plot_grafico_clustering(gerenciador.simple_kmeans.labels, gerenciador.simple_kmeans.centers, "Kmeans sklearn")
-    gerenciador.plot_grafico_clustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me")
-    gerenciador.plot_grafico_clustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH")
-    gerenciador.plot_grafico_clustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm")
+    plot_grafico_clustering(gerenciador.simple_kmeans.labels, gerenciador.simple_kmeans.centers, "Kmeans sklearn", gerenciador.daoIO.randon_dados)
+    plot_grafico_clustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me", gerenciador.daoIO.randon_dados)
+    plot_grafico_clustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH", gerenciador.daoIO.randon_dados)
+    plot_grafico_clustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm", gerenciador.daoIO.randon_dados)
     gerenciador.criarCluster()
 
     while(gerenciador.executa):
@@ -27,10 +28,10 @@ def main():
         # Aplica o algoritimo kmenas nos dados
         gerenciador.novo_data_stream()
         #Plota o grafico mostrando a distribuição dos dados nos clusters
-        gerenciador.plot_grafico_clustering(gerenciador.simple_kmeans.labels, gerenciador.simple_kmeans.centers, "Kmeans sklearn")
-        gerenciador.plot_grafico_clustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me")
-        gerenciador.plot_grafico_clustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH")
-        gerenciador.plot_grafico_clustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm")
+        plot_grafico_clustering(gerenciador.simple_kmeans.labels, gerenciador.simple_kmeans.centers, "Kmeans sklearn",  gerenciador.daoIO.randon_dados)
+        plot_grafico_clustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me", gerenciador.daoIO.randon_dados)
+        plot_grafico_clustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH", gerenciador.daoIO.randon_dados)
+        plot_grafico_clustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm", gerenciador.daoIO.randon_dados)
         print('\n\n')
         gerenciador.criarCluster()
     gerenciador.mostra_estatisticas()
