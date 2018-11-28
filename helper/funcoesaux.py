@@ -31,7 +31,7 @@ def pegaClustersOrganizados(dadosRecebidos, labels, centroids):
     return dadosAgregados
 
 
-def plot_grafico_clustering(labels, centers, name, data):
+def plotGraficoClustering(labels, centers, name, data):
     plt.scatter(data[:, 0],data[:,1], s = 100, c = labels)
     plt.scatter(centers[:, 0], centers[:, 1], s = 300, marker='*', c= 'red', label='Centroids')
     plt.title('Iris ' + name + ' Clustering Algorithm')
@@ -39,3 +39,18 @@ def plot_grafico_clustering(labels, centers, name, data):
     plt.ylabel('petal width in cm')
     plt.legend()
     plt.show()
+
+def criaTexto(cluster, nomeAlgoritimo):
+    texto = nomeAlgoritimo + "\n"
+    for index in range(len(cluster)):
+        texto += "\n\n\n\nCluster " + str(index) + "\n"
+        texto += "DATASET\n" + str(cluster[index].dataset) + "\n"
+        texto += "\n\nCluster Features " + str(index) + "\n"
+        texto += "SS = " + str(cluster[index].clusterFeat.SS) + "\n"
+        texto += "LS = " + str(cluster[index].clusterFeat.LS) + "\n"
+        texto += "N = " + str(cluster[index].clusterFeat.N) + "\n"
+
+    print(texto)
+    return texto
+
+

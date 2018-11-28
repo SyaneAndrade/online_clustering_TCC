@@ -83,3 +83,9 @@ class DAOarquivo(object):
             if(len(self.randon_dados) == len(self.dados)):
                 return False
         return True
+
+
+    def salvaArquivo(self, texto, nomeArquivo, path):
+        with open(path + nomeArquivo + ".txt", "w") as arquivo:
+            arquivo.write(texto)
+            arquivo.close()

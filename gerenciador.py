@@ -9,7 +9,7 @@ from algoritimosclustering.birch import BirchAlgo
 from algoritimosclustering.leader import TheLeaderAlgorithm
 from helper.funcoesaux import preencherClusters
 from helper.funcoesaux import pegaClustersOrganizados
-from helper.funcoesaux import plot_grafico_clustering
+from helper.funcoesaux import criaTexto
 
 class Gerenciador(object):
     """
@@ -27,7 +27,7 @@ class Gerenciador(object):
     
 
     # Responsável por iniciar os dados vindo do csv
-    def inicia_dataset(self, caminho, particao_final = 10):
+    def iniciaDataset(self, caminho, particao_final = 10):
         self.daoIO = DAOarquivo(caminho)
         self.daoIO.LerArquivo()
         self.daoIO.calcula_particao(particao_final)
@@ -37,7 +37,7 @@ class Gerenciador(object):
             self.executa = True
 
 
-    def novo_data_stream(self):
+    def novoDataStream(self):
         # self.executa = self.daoIO.pega_particao()
         self.executa = self.daoIO.cria_aleatorio()
         self.simple_kmeans.atualiza_kmeans(self.daoIO.randon_data)
@@ -78,5 +78,18 @@ class Gerenciador(object):
         self.leader.aplica_leader(self.daoIO.randon_data)
 
 
-    def mostra_estatisticas(self):
+    def mostraEstatisticas(self):
         self.simple_kmeans.estatisticas()
+
+    def finalizador(self):
+        texto = criaTexto(self.simple_kmeans.clusters, "Simple pass K-Means")
+        self.daoIO.salvaArquivo(texto, "SimplePassKMeans", "dados/mock/")
+
+        texto = criaTexto(self.sp_kmeans.clusters, "Simple pass K-Means Example")
+        self.daoIO.salvaArquivo(texto, "SimplePassKMeansExample", "dados/mock/")
+
+        texto = criaTexto(self.birch.clusters, "BIRCH")
+        self.daoIO.salvaArquivo(texto, "BIRCH", "dados/mock/")
+
+        texto = criaTexto(self.leader.clusters, "The Leader")
+        self.daoIO.salvaArquivo(texto, "TheLeader", "dados/mock/")
