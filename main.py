@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from gerenciador import Gerenciador
 from helper.funcoesaux import plotGraficoClustering
 from helper.funcoesaux import criaTexto
+from helper.funcoesaux import convertMatCsv
 
 
 
@@ -39,8 +40,15 @@ def main():
     # gerenciador.mostra_estatisticas()
 
 
+def convert():
+    datasets = ["constraceptive", "german", "optic", "pageblocks", "satellite", "magic", "yeast"]
+    for dataset in datasets:
+        convertMatCsv("dados/mat_datasets/", dataset, ".mat")
+
+
 if __name__ == '__main__':
-    main()
+    # main()
+    convert()
 
 
     # https://gist.github.com/yjzhang/aaf460849a4398422785c0e85932688d

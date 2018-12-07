@@ -2,6 +2,8 @@
 from clusters.cluster import Cluster
 import matplotlib.pyplot as plt
 import numpy as np
+import scipy.io as scp
+
 
 def preencherClusters(dadosOrganizados, algoritmoCluster):
     if(algoritmoCluster.clusters == []):
@@ -53,4 +55,11 @@ def criaTexto(cluster, nomeAlgoritimo):
     print(texto)
     return texto
 
+
+def convertMatCsv(path, nomearquivo, extensao):
+    data = scp.loadmat(path + nomearquivo + extensao)
+
+    for i in data:
+        if '__' not in i and 'readme' not in i:
+            np.savetxt(("dados/mock/"+nomearquivo+i+".csv"),data[i], fmt='%s',delimiter='|')
 
