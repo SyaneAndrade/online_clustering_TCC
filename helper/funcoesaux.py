@@ -61,5 +61,5 @@ def convertMatCsv(path, nomearquivo, extensao):
 
     for i in data:
         if '__' not in i and 'readme' not in i:
-            np.savetxt(("dados/mock/"+nomearquivo+i+".csv"),data[i], fmt='%s',delimiter='|')
+            np.savetxt(("dados/mock/"+nomearquivo+"/"+nomearquivo+i+".csv"),data[i], fmt='%s',delimiter='|')
 

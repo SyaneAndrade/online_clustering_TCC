@@ -40,15 +40,19 @@ class DAOarquivo(object):
             return False
         return True
 
-    def LerArquivo(self):
-        self.dataset = pd.read_csv(self.arquivo, sep= '|')
+    def LerArquivo(self, caminho = None):
+        if caminho == None:
+            caminho = self.arquivo
+            self.dataset = pd.read_csv(caminho, sep= '|')
+        else:
+            return pd.read_csv(caminho)
 
 
     def inicia_dados(self):
         self.LerArquivo()
         self.pont_inicial = 0
         self.pont_final = self.batch
-        self.dados = self.normaliza_dados(self.dataset.iloc[:, 0:4].values)
+        self.dados = self.normaliza_dados(self.dataset.iloc[:, 0:len(self.dataset[0])].values)
         self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
         self.cria_aleatorio()
         return True

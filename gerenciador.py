@@ -18,8 +18,15 @@ class Gerenciador(object):
     """
     daoIO = None
     executa = False
+    simple_kmeans = None
+    sp_kmeans = None
+    birch = None
+    leader = None
 
-    def __init__(self, num_cluster):
+    def __init__(self, caminho):
+        self.daoIO = DAOarquivo(caminho)
+
+    def inicia(self, num_cluster):
         self.simple_kmeans = SimpleKmeansPython(num_cluster)
         self.sp_kmeans = SimplePassKmeans(num_cluster)
         self.birch = BirchAlgo(threshold=1.0)
@@ -27,8 +34,7 @@ class Gerenciador(object):
     
 
     # Responsável por iniciar os dados vindo do csv
-    def iniciaDataset(self, caminho, particao_final = 10):
-        self.daoIO = DAOarquivo(caminho)
+    def iniciaDataset(self, particao_final = 10):
         self.daoIO.LerArquivo()
         self.daoIO.calcula_particao(particao_final)
         self.daoIO.inicia_dados()
@@ -80,6 +86,10 @@ class Gerenciador(object):
 
     def mostraEstatisticas(self):
         self.simple_kmeans.estatisticas()
+
+    def num_cluster(self, caminho):
+        num = self.daoIO.LerArquivo(caminho)
+        return num.values
 
     def finalizador(self):
         texto = criaTexto(self.simple_kmeans.clusters, "Simple pass K-Means")

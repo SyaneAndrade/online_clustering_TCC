@@ -5,44 +5,46 @@ from gerenciador import Gerenciador
 from helper.funcoesaux import plotGraficoClustering
 from helper.funcoesaux import criaTexto
 from helper.funcoesaux import convertMatCsv
+from config.metainf import *
 
 
 
 def main():
-    # Caminho onde se encontra o conjunto de dados
-    caminho = 'dados/mock/iris-dataset.csv'
-    # Numero de cluster para os algoritimos de clusterização de dados
-    num_cluster = 3
-    # Cria um objeto do tipo gerenciador já inicializando os parametros necessários
-    gerenciador = Gerenciador(num_cluster)
-    # Cria um df dos dados retirados do csv
-    gerenciador.iniciaDataset(caminho, 3)
-    # Aplica o algoritimo kmenas nos dados
-    gerenciador.iniciar()
-    plotGraficoClustering(gerenciador.simple_kmeans.labels, gerenciador.simple_kmeans.centers, "Kmeans sklearn", gerenciador.daoIO.randon_dados)
-    plotGraficoClustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me", gerenciador.daoIO.randon_dados)
-    plotGraficoClustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH", gerenciador.daoIO.randon_dados)
-    plotGraficoClustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm", gerenciador.daoIO.randon_dados)
-    gerenciador.criarCluster()
-
-    while(gerenciador.executa):
-        #Plota o grafico mostrando a distribuição dos dados nos clusters
+    for dataset in lista:
+        # Caminho onde se encontra o conjunto de dados
+        caminho = "dados/mock/" + dataset +"/"+ dataset + dados + ".csv"
+        # Cria um objeto do tipo gerenciador já inicializando os parametros necessários
+        gerenciador = Gerenciador(caminho)
+        # Numero de cluster para os algoritimos de clusterização de dados
+        num_cluster = gerenciador.num_cluster("dados/mock/" + dataset +"/"+ dataset + numCluster + ".csv")
+        # Cria um df dos dados retirados do csv
+        gerenciador.inicia(num_cluster)
+        gerenciador.iniciaDataset(numPart)
         # Aplica o algoritimo kmenas nos dados
-        gerenciador.novoDataStream()
-        #Plota o grafico mostrando a distribuição dos dados nos clusters
-        plotGraficoClustering(gerenciador.simple_kmeans.labels, gerenciador.simple_kmeans.centers, "Kmeans sklearn",  gerenciador.daoIO.randon_dados)
+        gerenciador.iniciar()
+        plotGraficoClustering(gerenciador.simple_kmeans.labels, gerenciador.simple_kmeans.centers, "Kmeans sklearn", gerenciador.daoIO.randon_dados)
         plotGraficoClustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me", gerenciador.daoIO.randon_dados)
         plotGraficoClustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH", gerenciador.daoIO.randon_dados)
         plotGraficoClustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm", gerenciador.daoIO.randon_dados)
-        print('\n\n')
         gerenciador.criarCluster()
-    gerenciador.finalizador()
-    # gerenciador.mostra_estatisticas()
+
+        while(gerenciador.executa):
+            #Plota o grafico mostrando a distribuição dos dados nos clusters
+            # Aplica o algoritimo kmenas nos dados
+            gerenciador.novoDataStream()
+            #Plota o grafico mostrando a distribuição dos dados nos clusters
+            plotGraficoClustering(gerenciador.simple_kmeans.labels, gerenciador.simple_kmeans.centers, "Kmeans sklearn",  gerenciador.daoIO.randon_dados)
+            plotGraficoClustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me", gerenciador.daoIO.randon_dados)
+            plotGraficoClustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH", gerenciador.daoIO.randon_dados)
+            plotGraficoClustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm", gerenciador.daoIO.randon_dados)
+            print('\n\n')
+            gerenciador.criarCluster()
+        gerenciador.finalizador()
+        # gerenciador.mostra_estatisticas()
 
 
 def convert():
-    datasets = ["constraceptive", "german", "optic", "pageblocks", "satellite", "magic", "yeast"]
-    for dataset in datasets:
+    for dataset in lista:
         convertMatCsv("dados/mat_datasets/", dataset, ".mat")
 
 
