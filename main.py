@@ -10,13 +10,13 @@ from config.metainf import *
 
 
 def main():
-    for dataset in lista:
+    for index in range(len(lista)):
         # Caminho onde se encontra o conjunto de dados
-        caminho = "dados/mock/" + dataset +"/"+ dataset + dados + ".csv"
+        caminho = "dados/mock/" + lista[index] +"/"+ lista[index] + dados + ".csv"
         # Cria um objeto do tipo gerenciador já inicializando os parametros necessários
         gerenciador = Gerenciador(caminho)
         # Numero de cluster para os algoritimos de clusterização de dados
-        num_cluster = gerenciador.num_cluster("dados/mock/" + dataset +"/"+ dataset + numCluster + ".csv")
+        num_cluster = numCluster[index]
         # Cria um df dos dados retirados do csv
         gerenciador.inicia(num_cluster)
         gerenciador.iniciaDataset(numPart)
