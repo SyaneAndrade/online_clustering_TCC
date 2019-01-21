@@ -10,7 +10,7 @@ class BirchAlgo(object):
     centers = None
     labels_temporary = None
     
-    def __init__(self, threshold = 0.5):
+    def __init__(self, threshold = 0.85):
         self.birch = Birch(threshold=threshold, n_clusters=None, compute_labels=True)
         self.n_cluster = None
     

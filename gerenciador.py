@@ -29,8 +29,8 @@ class Gerenciador(object):
     def inicia(self, num_cluster):
         self.simple_kmeans = SimpleKmeansPython(num_cluster)
         self.sp_kmeans = SimplePassKmeans(num_cluster)
-        self.birch = BirchAlgo(threshold=1.0)
-        self.leader = TheLeaderAlgorithm(threshold=4.5)
+        self.birch = BirchAlgo(threshold=7)
+        self.leader = TheLeaderAlgorithm(threshold=30)
     
 
     # Responsável por iniciar os dados vindo do csv
@@ -91,15 +91,15 @@ class Gerenciador(object):
         num = self.daoIO.LerArquivo(caminho)
         return num.values
 
-    def finalizador(self):
-        texto = criaTexto(self.simple_kmeans.clusters, "Simple pass K-Means")
-        self.daoIO.salvaArquivo(texto, "SimplePassKMeans", "dados/mock/")
+    def finalizador(self, dataset):
+        texto = criaTexto(self.simple_kmeans.clusters, "Simple pass K-Means " + dataset)
+        self.daoIO.salvaArquivo(texto, "SimplePassKMeans " + dataset, "dados/mock/" + dataset + "/")
 
-        texto = criaTexto(self.sp_kmeans.clusters, "Simple pass K-Means Example")
-        self.daoIO.salvaArquivo(texto, "SimplePassKMeansExample", "dados/mock/")
+        texto = criaTexto(self.sp_kmeans.clusters, "Simple pass K-Means Example" + dataset)
+        self.daoIO.salvaArquivo(texto, "SimplePassKMeansExample " + dataset, "dados/mock/" + dataset + "/")
 
-        texto = criaTexto(self.birch.clusters, "BIRCH")
-        self.daoIO.salvaArquivo(texto, "BIRCH", "dados/mock/")
+        texto = criaTexto(self.birch.clusters, "BIRCH " + dataset)
+        self.daoIO.salvaArquivo(texto, "BIRCH " + dataset, "dados/mock/" + dataset + "/")
 
-        texto = criaTexto(self.leader.clusters, "The Leader")
-        self.daoIO.salvaArquivo(texto, "TheLeader", "dados/mock/")
+        texto = criaTexto(self.leader.clusters, "The Leader " + dataset)
+        self.daoIO.salvaArquivo(texto, "TheLeader " + dataset, "dados/mock/" + dataset + "/")

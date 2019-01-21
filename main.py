@@ -39,7 +39,7 @@ def main():
             plotGraficoClustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm", gerenciador.daoIO.randon_dados)
             print('\n\n')
             gerenciador.criarCluster()
-        gerenciador.finalizador()
+        gerenciador.finalizador(lista[index])
         # gerenciador.mostra_estatisticas()
 
 

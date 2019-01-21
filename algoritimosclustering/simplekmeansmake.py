@@ -18,7 +18,7 @@ class SimplePassKmeans(object):
         n = np.size(dados, 0)
         randon_centers =np.random.choice((0, n - 1), self.num_clusters)
         self.centers = dados[randon_centers]
-        self.cluster_counts = np.zeros(self.num_clusters)
+        self.cluster_counts = np.zeros(self.num_clusters, dtype=int)
 
     
     def aplica_kmeans(self, dados):
@@ -47,5 +47,11 @@ class SimplePassKmeans(object):
             cluster_distances[cluster] = sum(np.sqrt((point - self.centers[cluster])**2))
         c = np.argmin(cluster_distances)
         self.cluster_counts[c] += 1
-        self.centers[c] += 1.0/self.cluster_counts[c]*(point - self.centers[c])
+       
+        if(self.centers.dtype =='int64'):
+            adcionar = 1/self.cluster_counts[c]*(point - self.centers[c])
+            adcionar = adcionar.astype('int')
+            self.centers[c] += adcionar
+        else:
+            self.centers[c] += 1/self.cluster_counts[c]*(point - self.centers[c])
         return c

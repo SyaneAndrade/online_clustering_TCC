@@ -52,7 +52,7 @@ def criaTexto(cluster, nomeAlgoritimo):
         texto += "LS = " + str(cluster[index].clusterFeat.LS) + "\n"
         texto += "N = " + str(cluster[index].clusterFeat.N) + "\n"
 
-    print(texto)
+    # print(texto)
     return texto
 
 

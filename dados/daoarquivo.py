@@ -43,9 +43,9 @@ class DAOarquivo(object):
     def LerArquivo(self, caminho = None):
         if caminho == None:
             caminho = self.arquivo
-            self.dataset = pd.read_csv(caminho, sep= '|')
+            self.dataset = pd.read_csv(caminho, sep= '|', header= None)
         else:
-            return pd.read_csv(caminho)
+            return pd.read_csv(caminho, sep='|', header = None)
 
 
     def inicia_dados(self):

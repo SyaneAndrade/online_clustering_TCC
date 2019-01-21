@@ -47,5 +47,10 @@ class TheLeaderAlgorithm(object):
                 self.num_clusters += 1
             else:
                 self.cluster_counts[cluster] += 1
-                self._centers[cluster] += 1.0/self.cluster_counts[cluster]*(point - self._centers[cluster])
+                if(point.dtype =='int64'):
+                    adcionar = 1/self.cluster_counts[cluster]*(point - self._centers[cluster])
+                    adcionar = adcionar.astype('int')
+                    self._centers[cluster] += adcionar
+                else:
+                   self._centers[cluster] +=  1/self.cluster_counts[cluster]*(point - self._centers[cluster])
         return cluster
