@@ -26,11 +26,11 @@ class Gerenciador(object):
     def __init__(self, caminho):
         self.daoIO = DAOarquivo(caminho)
 
-    def inicia(self, num_cluster):
+    def inicia(self, num_cluster, threshholdBirch, thresholdLeader):
         self.simple_kmeans = SimpleKmeansPython(num_cluster)
         self.sp_kmeans = SimplePassKmeans(num_cluster)
-        self.birch = BirchAlgo(threshold=7)
-        self.leader = TheLeaderAlgorithm(threshold=30)
+        self.birch = BirchAlgo(threshold=threshholdBirch)
+        self.leader = TheLeaderAlgorithm(threshold=thresholdLeader)
     
 
     # Responsável por iniciar os dados vindo do csv

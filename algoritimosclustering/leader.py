@@ -12,7 +12,7 @@ class TheLeaderAlgorithm(object):
     cluster_counts = []
 
 
-    def __init__(self, threshold = 0.5, num  = 0):
+    def __init__(self, threshold = 0.2, num  = 0):
         self.num_clusters = num
         self.threshold = threshold
 

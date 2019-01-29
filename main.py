@@ -17,8 +17,10 @@ def main():
         gerenciador = Gerenciador(caminho)
         # Numero de cluster para os algoritimos de clusterização de dados
         num_cluster = numCluster[index]
+        tsbirch = threshholdBirch[index]
+        tsLeader = threshholdLeader[index]
         # Cria um df dos dados retirados do csv
-        gerenciador.inicia(num_cluster)
+        gerenciador.inicia(num_cluster, tsbirch, tsLeader)
         gerenciador.iniciaDataset(numPart)
         # Aplica o algoritimo kmenas nos dados
         gerenciador.iniciar()
