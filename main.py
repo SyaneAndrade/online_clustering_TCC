@@ -13,6 +13,7 @@ def main():
     for index in range(len(lista)):
         # Caminho onde se encontra o conjunto de dados
         caminho = "dados/mock/" + lista[index] +"/"+ lista[index] + dados + ".csv"
+        print(lista[index])
         # Cria um objeto do tipo gerenciador já inicializando os parametros necessários
         gerenciador = Gerenciador(caminho)
         # Numero de cluster para os algoritimos de clusterização de dados
@@ -23,24 +24,24 @@ def main():
         gerenciador.inicia(num_cluster, tsbirch, tsLeader)
         gerenciador.iniciaDataset(numPart)
         # Aplica o algoritimo kmenas nos dados
-        gerenciador.iniciar()
+        gerenciador.iniciar(False)
         plotGraficoClustering(gerenciador.simple_kmeans.labels, gerenciador.simple_kmeans.centers, "Kmeans sklearn", gerenciador.daoIO.randon_dados)
         plotGraficoClustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me", gerenciador.daoIO.randon_dados)
         plotGraficoClustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH", gerenciador.daoIO.randon_dados)
         plotGraficoClustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm", gerenciador.daoIO.randon_dados)
-        gerenciador.criarCluster()
+        gerenciador.criarCluster(False)
 
         while(gerenciador.executa):
             #Plota o grafico mostrando a distribuição dos dados nos clusters
             # Aplica o algoritimo kmenas nos dados
-            gerenciador.novoDataStream()
+            gerenciador.novoDataStream(False)
             #Plota o grafico mostrando a distribuição dos dados nos clusters
             plotGraficoClustering(gerenciador.simple_kmeans.labels, gerenciador.simple_kmeans.centers, "Kmeans sklearn",  gerenciador.daoIO.randon_dados)
             plotGraficoClustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me", gerenciador.daoIO.randon_dados)
             plotGraficoClustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH", gerenciador.daoIO.randon_dados)
             plotGraficoClustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm", gerenciador.daoIO.randon_dados)
             print('\n\n')
-            gerenciador.criarCluster()
+            gerenciador.criarCluster(False)
         gerenciador.finalizador(lista[index])
         # gerenciador.mostra_estatisticas()
 
