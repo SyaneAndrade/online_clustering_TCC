@@ -27,6 +27,7 @@ class TheLeaderAlgorithm(object):
             self.labels.append(cluster)
             self.labels_temporary.append(cluster)
         self.centers = np.array(self._centers)
+        return self.labels_temporary
         
         
     def leader_update(self, point, cluster_counts = None):
