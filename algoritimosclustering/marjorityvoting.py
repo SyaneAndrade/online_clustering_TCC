@@ -3,16 +3,16 @@
 class MarjorityVoting(object):
     
     labels = []
-    votes = []
+    votes = None
 
     def voting(self, vote):
         self.votes.append(vote)
 
     
-    def counting_votes(self):
+    def counting_votes(self, votes):
         cluster = 0
         count_vote = 0
-        for vote in self.votes:
+        for vote in votes:
             if count_vote == 0:
                 cluster = vote
             if vote == cluster:
