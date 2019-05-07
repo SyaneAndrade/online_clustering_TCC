@@ -16,6 +16,7 @@ class DAOarquivo(object):
     num_part = None
     dataset = None
     particao = None
+    particao_cluster = None
     _rowAcess = []
     randon_data = []
     randon_dados = None
@@ -26,6 +27,9 @@ class DAOarquivo(object):
 
 
     def calcula_particao(self, num_part):
+        if num_part == 0:
+            self.batch = 1
+            self.num_part = num_part
         self.batch = round(len(self.dataset) / num_part)
         self.num_part = num_part
     
@@ -36,6 +40,10 @@ class DAOarquivo(object):
         if(self.pont_final >= len(self.dataset)):
             self.pont_final = len(self.dataset)
         self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+        if self.particao_cluster == None:
+            self.particao_cluster = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+        else:
+            self.particao_cluster.append(self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values))
         if(self.pont_final == len(self.dataset)):
             return False
         return True
@@ -54,6 +62,10 @@ class DAOarquivo(object):
         self.pont_final = self.batch
         self.dados = self.normaliza_dados(self.dataset.iloc[:, 0:len(self.dataset[0])].values)
         self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+        if self.particao_cluster == None:
+            self.particao_cluster = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+        else:
+            self.particao_cluster.append(self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values))
         self.cria_aleatorio()
         return True
 

@@ -40,7 +40,7 @@ class Gerenciador(object):
         self.daoIO.calcula_particao(particao_final)
         self.daoIO.inicia_dados()
         self.simple_kmeans.verdadeira_estatistica(self.daoIO.dados)
-        if(particao_final > 1):
+        if(particao_final > 1 or particao_final == 0):
             self.executa = True
 
 
