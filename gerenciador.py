@@ -22,6 +22,7 @@ class Gerenciador(object):
     sp_kmeans = None
     birch = None
     leader = None
+    marjorityvoting = None
 
     def __init__(self, caminho):
         self.daoIO = DAOarquivo(caminho)
