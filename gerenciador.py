@@ -25,6 +25,7 @@ class Gerenciador(object):
     leader = None
     marjorityvoting = None
     vote = None
+    num_cluster = 0
 
     def __init__(self, caminho):
         self.daoIO = DAOarquivo(caminho)
@@ -35,6 +36,7 @@ class Gerenciador(object):
         self.birch = BirchAlgo(threshold=threshholdBirch)
         self.leader = TheLeaderAlgorithm(threshold=thresholdLeader)
         self.marjorityvoting = MarjorityVoting()
+        self.num_cluster = num_cluster
     
 
     # Responsável por iniciar os dados vindo do csv
@@ -62,16 +64,16 @@ class Gerenciador(object):
                 self.votes = None
         else:
             self.executa = self.daoIO.pega_particao()
-            if(self.votes == None):
+            if(self.votes.any()):
                 self.votes = self.birch.aplica_birch(self.daoIO.particao)
             else:
                 self.votes = np.append(self.votes, self.birch.aplica_birch(self.daoIO.particao))
             #The Leader alghortm
             self.votes = np.append(self.votes, self.leader.aplica_leader(self.daoIO.particao))
             if(len(self.daoIO.particao_cluster) == self.num_cluster):
-                self.votes = np.append(self.votes, self.simple_kmeans.aplica_kmeans(self.daoIO.particao))
+                self.votes = np.append(self.votes, self.simple_kmeans.aplica_kmeans(self.daoIO.particao_cluster))
                 # Baseado no do amiguinho
-                self.votes = np.append(self.votes, self.sp_kmeans.aplica_kmeans(self.daoIO.particao))
+                self.votes = np.append(self.votes, self.sp_kmeans.aplica_kmeans(self.daoIO.particao_cluster))
                 self.marjorityvoting.counting_votes(self.votes)
                 self.votes = None
         # self.criarCluster()
@@ -80,12 +82,13 @@ class Gerenciador(object):
 
         if randon:
         #Kmeans do scitlearn
-            dadosOrganizados = pegaClustersOrganizados(self.daoIO.randon_data, self.simple_kmeans.labels_temporary, self.simple_kmeans.centers)
-            preencherClusters(dadosOrganizados, self.simple_kmeans)
+            if(self.daoIO.particao_cluster.any()):
+                dadosOrganizados = pegaClustersOrganizados(self.daoIO.randon_data, self.simple_kmeans.labels_temporary, self.simple_kmeans.centers)
+                preencherClusters(dadosOrganizados, self.simple_kmeans)
 
-            #Kmeans baseado de um codigo na internet
-            dadosOrganizados = pegaClustersOrganizados(self.daoIO.randon_data, self.sp_kmeans.labels, self.sp_kmeans.centers)
-            preencherClusters(dadosOrganizados, self.sp_kmeans)
+                #Kmeans baseado de um codigo na internet
+                dadosOrganizados = pegaClustersOrganizados(self.daoIO.randon_data, self.sp_kmeans.labels, self.sp_kmeans.centers)
+                preencherClusters(dadosOrganizados, self.sp_kmeans)
 
             #Birch do scitlearn
             dadosOrganizados = pegaClustersOrganizados(self.daoIO.randon_data, self.birch.labels, self.birch.centers)
@@ -95,13 +98,14 @@ class Gerenciador(object):
             dadosOrganizados = pegaClustersOrganizados(self.daoIO.randon_data, self.leader.labels, self.leader.centers)
             preencherClusters(dadosOrganizados, self.leader)
         else:
-            #Kmeans do scitlearn
-            dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao, self.simple_kmeans.labels_temporary, self.simple_kmeans.centers)
-            preencherClusters(dadosOrganizados, self.simple_kmeans)
+            if(self.daoIO.particao_cluster.any()):
+                #Kmeans do scitlearn
+                dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao, self.simple_kmeans.labels_temporary, self.simple_kmeans.centers)
+                preencherClusters(dadosOrganizados, self.simple_kmeans)
 
-            #Kmeans baseado de um codigo na internet
-            dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao, self.sp_kmeans.labels, self.sp_kmeans.centers)
-            preencherClusters(dadosOrganizados, self.sp_kmeans)
+                #Kmeans baseado de um codigo na internet
+                dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao, self.sp_kmeans.labels, self.sp_kmeans.centers)
+                preencherClusters(dadosOrganizados, self.sp_kmeans)
 
             #Birch do scitlearn
             dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao, self.birch.labels, self.birch.centers)
