@@ -30,8 +30,9 @@ class DAOarquivo(object):
         if num_part == 0:
             self.batch = 1
             self.num_part = num_part
-        self.batch = round(len(self.dataset) / num_part)
-        self.num_part = num_part
+        else:
+            self.batch = round(len(self.dataset) / num_part)
+            self.num_part = num_part
     
 
     def pega_particao(self):
@@ -39,11 +40,11 @@ class DAOarquivo(object):
         self.pont_final = self.pont_final + self.batch
         if(self.pont_final >= len(self.dataset)):
             self.pont_final = len(self.dataset)
-        self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+        self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:len(self.dataset)].values)
         if self.particao_cluster == None:
-            self.particao_cluster = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+            self.particao_cluster = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final,  0:len(self.dataset)].values)
         else:
-            self.particao_cluster.append(self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values))
+            self.particao_cluster.append(self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final,  0:len(self.dataset)].values))
         if(self.pont_final == len(self.dataset)):
             return False
         return True
@@ -61,11 +62,11 @@ class DAOarquivo(object):
         self.pont_inicial = 0
         self.pont_final = self.batch
         self.dados = self.normaliza_dados(self.dataset.iloc[:, 0:len(self.dataset[0])].values)
-        self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+        self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:len(self.dataset[0])].values)
         if self.particao_cluster == None:
-            self.particao_cluster = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+            self.particao_cluster = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:len(self.dataset[0])].values)
         else:
-            self.particao_cluster.append(self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values))
+            self.particao_cluster.append(self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:len(self.dataset[0])].values))
         self.cria_aleatorio()
         return True
 

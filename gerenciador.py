@@ -127,17 +127,19 @@ class Gerenciador(object):
                 self.votes = np.append(self.votes, self.sp_kmeans.aplica_kmeans(self.daoIO.particao_cluster))
                 self.marjorityvoting.counting_votes(self.votes)
                 self.votes = None
+                self.daoIO.particao_cluster = None
         else:
             #BIRCH
             self.votes = self.birch.aplica_birch(self.daoIO.particao)
             #The Leader alghortm
             self.votes = np.append(self.votes, self.leader.aplica_leader(self.daoIO.particao))
             if(len(self.daoIO.particao_cluster) == self.num_cluster):
-                self.votes = np.append(self.votes, self.simple_kmeans.aplica_kmeans(self.daoIO.particao))
+                self.votes = np.append(self.votes, self.simple_kmeans.aplica_kmeans(self.daoIO.particao_cluster))
                 # Baseado no do amiguinho
-                self.votes = np.append(self.votes, self.sp_kmeans.aplica_kmeans(self.daoIO.particao))
+                self.votes = np.append(self.votes, self.sp_kmeans.aplica_kmeans(self.daoIO.particao_cluster))
                 self.marjorityvoting.counting_votes(self.votes)
                 self.votes = None
+                self.daoIO.particao_cluster = None
 
 
     def mostraEstatisticas(self):
