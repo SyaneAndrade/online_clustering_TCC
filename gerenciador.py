@@ -52,43 +52,46 @@ class Gerenciador(object):
     def novoDataStream(self, randon):
         if randon:
             self.executa = self.daoIO.cria_aleatorio()
-            if(self.votes == None):
-                self.votes = self.birch.aplica_birch(self.daoIO.randon_data)
-            else:
-                self.votes = np.append(self.votes, self.birch.aplica_birch(self.daoIO.randon_data))
-            self.votes = np.append(self.votes, self.leader.aplica_leader(self.daoIO.randon_data))
+            self.birch.aplica_birch(self.daoIO.randon_data)
+            self.leader.aplica_leader(self.daoIO.randon_data)
             if(len(self.daoIO.particao_cluster) == self.num_cluster):
-                self.votes = np.append(self.votes, self.simple_kmeans.atualiza_kmeans(self.daoIO.randon_data))
-                self.votes = np.append(self.votes, self.sp_kmeans.aplica_kmeans(self.daoIO.randon_data))
-                self.marjorityvoting.counting_votes(self.votes)
-                self.votes = None
+                self.simple_kmeans.atualiza_kmeans(self.daoIO.randon_data)
+                self.sp_kmeans.aplica_kmeans(self.daoIO.randon_data)
+                for i in range(self.num_cluster, 0, -1):
+                    self.cria_vote(-i)
+                    self.marjorityvoting.counting_votes(self.votes)
+                self.criarCluster(True)
         else:
             self.executa = self.daoIO.pega_particao()
-            if(self.votes.any()):
-                self.votes = self.birch.aplica_birch(self.daoIO.particao)
-            else:
-                self.votes = np.append(self.votes, self.birch.aplica_birch(self.daoIO.particao))
+            self.birch.aplica_birch(self.daoIO.particao)
             #The Leader alghortm
-            self.votes = np.append(self.votes, self.leader.aplica_leader(self.daoIO.particao))
+            self.leader.aplica_leader(self.daoIO.particao)
             if(len(self.daoIO.particao_cluster) == self.num_cluster):
-                self.votes = np.append(self.votes, self.simple_kmeans.aplica_kmeans(self.daoIO.particao_cluster))
+                self.simple_kmeans.aplica_kmeans(self.daoIO.particao_cluster)
                 # Baseado no do amiguinho
-                self.votes = np.append(self.votes, self.sp_kmeans.aplica_kmeans(self.daoIO.particao_cluster))
-                self.marjorityvoting.counting_votes(self.votes)
-                self.votes = None
-        # self.criarCluster()
+                self.sp_kmeans.aplica_kmeans(self.daoIO.particao_cluster)
+                
+                for i in range((len(self.sp_kmeans.labels) - self.num_cluster),len(self.sp_kmeans.labels), 1):
+                    self.cria_vote(-i)
+                    self.marjorityvoting.counting_votes(self.votes)
+                self.criarCluster(False)
+                self.daoIO.particao_cluster = None
+
+    def cria_vote(self, pos):
+        self.votes = np.array([self.sp_kmeans.labels[pos], self.simple_kmeans.labels[pos], self.birch.labels[pos], self.leader.labels[pos]])
+        print(self.votes)
+
 
     def criarCluster(self, randon):
 
         if randon:
         #Kmeans do scitlearn
-            if(self.daoIO.particao_cluster.any()):
-                dadosOrganizados = pegaClustersOrganizados(self.daoIO.randon_data, self.simple_kmeans.labels_temporary, self.simple_kmeans.centers)
-                preencherClusters(dadosOrganizados, self.simple_kmeans)
+            dadosOrganizados = pegaClustersOrganizados(self.daoIO.randon_data, self.simple_kmeans.labels, self.simple_kmeans.centers)
+            preencherClusters(dadosOrganizados, self.simple_kmeans)
 
-                #Kmeans baseado de um codigo na internet
-                dadosOrganizados = pegaClustersOrganizados(self.daoIO.randon_data, self.sp_kmeans.labels, self.sp_kmeans.centers)
-                preencherClusters(dadosOrganizados, self.sp_kmeans)
+                    #Kmeans baseado de um codigo na internet
+            dadosOrganizados = pegaClustersOrganizados(self.daoIO.randon_data, self.sp_kmeans.labels, self.sp_kmeans.centers)
+            preencherClusters(dadosOrganizados, self.sp_kmeans)
 
             #Birch do scitlearn
             dadosOrganizados = pegaClustersOrganizados(self.daoIO.randon_data, self.birch.labels, self.birch.centers)
@@ -98,21 +101,20 @@ class Gerenciador(object):
             dadosOrganizados = pegaClustersOrganizados(self.daoIO.randon_data, self.leader.labels, self.leader.centers)
             preencherClusters(dadosOrganizados, self.leader)
         else:
-            if(self.daoIO.particao_cluster.any()):
-                #Kmeans do scitlearn
-                dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao, self.simple_kmeans.labels_temporary, self.simple_kmeans.centers)
-                preencherClusters(dadosOrganizados, self.simple_kmeans)
+            #Kmeans do scitlearn
+            dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao_cluster, self.simple_kmeans.labels, self.simple_kmeans.centers)
+            preencherClusters(dadosOrganizados, self.simple_kmeans)
 
-                #Kmeans baseado de um codigo na internet
-                dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao, self.sp_kmeans.labels, self.sp_kmeans.centers)
-                preencherClusters(dadosOrganizados, self.sp_kmeans)
+            #Kmeans baseado de um codigo na internet
+            dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao_cluster, self.sp_kmeans.labels, self.sp_kmeans.centers)
+            preencherClusters(dadosOrganizados, self.sp_kmeans)
 
             #Birch do scitlearn
-            dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao, self.birch.labels, self.birch.centers)
+            dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao_cluster, self.birch.labels, self.birch.centers)
             preencherClusters(dadosOrganizados, self.birch)
 
             #Leader baseado em um algoritimo na internet
-            dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao, self.leader.labels, self.leader.centers)
+            dadosOrganizados = pegaClustersOrganizados(self.daoIO.particao_cluster, self.leader.labels, self.leader.centers)
             preencherClusters(dadosOrganizados, self.leader)
     
 
@@ -121,37 +123,33 @@ class Gerenciador(object):
         # kmeans biblioteca do python
         if randon:
             #BIRCH
-            self.votes = self.birch.aplica_birch(self.daoIO.randon_data)
+            self.birch.aplica_birch(self.daoIO.randon_data)
             #The Leader alghortm
-            self.votes = np.append(self.votes, self.leader.aplica_leader(self.daoIO.randon_data))
+            self.leader.aplica_leader(self.daoIO.randon_data)
             if(len(self.daoIO.particao_cluster) == self.num_cluster):
-                self.votes = np.append(self.votes, self.simple_kmeans.aplica_kmeans(self.daoIO.particao_cluster))
+                self.simple_kmeans.aplica_kmeans(self.daoIO.particao_cluster)
                 # Baseado no do amiguinho
                 # self.sp_kmeans.inicia_kmeans(self.daoIO.randon_data)
-                self.votes = np.append(self.votes, self.sp_kmeans.aplica_kmeans(self.daoIO.particao_cluster))
+                self.sp_kmeans.aplica_kmeans(self.daoIO.particao_cluster)
                 self.marjorityvoting.counting_votes(self.votes)
-                self.votes = None
+                self.criarCluster(True)
                 self.daoIO.particao_cluster = None
         else:
             #BIRCH
-            self.votes = self.birch.aplica_birch(self.daoIO.particao)
+            self.birch.aplica_birch(self.daoIO.particao)
             #The Leader alghortm
-            self.votes = np.append(self.votes, self.leader.aplica_leader(self.daoIO.particao))
+            self.leader.aplica_leader(self.daoIO.particao)
             if(len(self.daoIO.particao_cluster) == self.num_cluster):
-                self.votes = np.append(self.votes, self.simple_kmeans.aplica_kmeans(self.daoIO.particao_cluster))
+                self.simple_kmeans.aplica_kmeans(self.daoIO.particao_cluster)
                 # Baseado no do amiguinho
-                self.votes = np.append(self.votes, self.sp_kmeans.aplica_kmeans(self.daoIO.particao_cluster))
+                self.sp_kmeans.aplica_kmeans(self.daoIO.particao_cluster)
                 self.marjorityvoting.counting_votes(self.votes)
-                self.votes = None
+                self.criarCluster(True)
                 self.daoIO.particao_cluster = None
 
 
     def mostraEstatisticas(self):
-        self.simple_kmeans.estatisticas()
-
-    def num_cluster(self, caminho):
-        num = self.daoIO.LerArquivo(caminho)
-        return num.values
+        self.simple_kmeans.estatisticas()   
 
     def finalizador(self, dataset):
         texto = criaTexto(self.simple_kmeans.clusters, "Simple pass K-Means " + dataset)

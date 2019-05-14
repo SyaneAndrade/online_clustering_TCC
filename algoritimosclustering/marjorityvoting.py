@@ -4,10 +4,6 @@ class MarjorityVoting(object):
     
     labels = []
     votes = None
-
-    def voting(self, vote):
-        self.votes.append(vote)
-
     
     def counting_votes(self, votes):
         cluster = 0
