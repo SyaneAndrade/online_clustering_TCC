@@ -22,7 +22,7 @@ class SimplePassKmeans(object):
 
     
     def aplica_kmeans(self, dados):
-        if self.centers == None:
+        if self.centers is None:
             self.inicia_kmeans(dados)
         self.labels_temporary  = []
         for item in dados:

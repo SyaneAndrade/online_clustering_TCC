@@ -79,8 +79,6 @@ class Gerenciador(object):
 
     def cria_vote(self, pos):
         self.votes = np.array([self.sp_kmeans.labels[pos], self.simple_kmeans.labels[pos], self.birch.labels[pos], self.leader.labels[pos]])
-        print(self.votes)
-
 
     def criarCluster(self, randon):
 

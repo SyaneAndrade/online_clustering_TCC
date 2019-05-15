@@ -29,12 +29,14 @@ def main():
         # plotGraficoClustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH", gerenciador.daoIO.randon_dados)
         # plotGraficoClustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm", gerenciador.daoIO.randon_dados)
         gerenciador.iniciar(False)
+        count = 1
         while(gerenciador.executa):
             #Plota o grafico mostrando a distribuição dos dados nos clusters
             # Aplica o algoritimo kmenas nos dados
             gerenciador.novoDataStream(False)
             #Plota o grafico mostrando a distribuição dos dados nos clusters
-            print('\n\n')
+            count += 1
+            print(str(count) + '\n\n')
         gerenciador.finalizador(lista[index])
         plotGraficoClustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH", gerenciador.daoIO.dados)
         plotGraficoClustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me", gerenciador.daoIO.dados)
