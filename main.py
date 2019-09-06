@@ -44,7 +44,7 @@ def instanciarGerenciador(dataset):
     gerenciador = Gerenciador(caminho)
     return gerenciador
 
-def encontraValoresDasVariaveis (dataset):
+def encontraValoresDasVariaveis (dataset, passoBirch = 0.1, passoLeader = 0.1):
     if (not dataset):
         print('Dataset não encontrado na estrutura que contem as informações dos mesmos')
     tsBirch = dataset.threshholdBirch
@@ -54,9 +54,13 @@ def encontraValoresDasVariaveis (dataset):
     random = False
     gerenciador.novoDataStream(random)
 
-    while(!bateuMetaClusters(gerenciador, metaCentroides)):
-        tsBirch -= 1
-        tsLeader -= 1
+    while(not bateuMetaClusters(gerenciador, metaCentroides)):
+        if (maiorQueMeta(gerenciador, metaCentroides)):
+            tsBirch += passoBirch
+            tsLeader += passoLeader
+        else:
+            tsBirch -= passoBirch
+            tsLeader -= passoLeader
         gerenciador = iniciaGerenciador(dataset, dataset.numCluster, tsBirch, tsLeader, numPart)
         gerenciador.novoDataStream(random)
     print(f'{tsBirch} {tsLeader}')
