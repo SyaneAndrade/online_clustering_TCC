@@ -21,6 +21,13 @@ def bateuMetaClusters (gerenciador, metaDeCluster):
         leader_clusters == metaDeCluster
     )
 
+def maiorQueMeta (gerenciador, metaDeCluster):
+    birch_clusters = gerenciador.birch.centers
+    leader_clusters = gerenciador.leader.centers
+    return (birch_clusters > metaDeCluster or leader_clusters > metaDeCluster)
+
+def menorQueMeta (gerenciador, metaDeCluster):
+    return not maiorQueMeta(gerenciador, metaDeCluster)
 
 def iniciaGerenciador(dataset, num_cluster, tsbirch, tsLeader, numPart):
     gerenciador = instanciarGerenciador(dataset)
