@@ -10,12 +10,13 @@ import copy
 
 
 def bateuMetaClusters (gerenciador, metaDeCluster):
-    simple_kmeans_clusters = gerenciador.simple_kmeans.centers
-    sp_kmeans_clusters = gerenciador.sp_kmeans.centers
+    # simple_kmeans_clusters = gerenciador.simple_kmeans.centers
+    # sp_kmeans_clusters = gerenciador.sp_kmeans.centers
     birch_clusters = gerenciador.birch.centers
     leader_clusters = gerenciador.leader.centers
-    return (simple_kmeans_clusters == metaDeCluster and
-        sp_kmeans_clusters == metaDeCluster and
+    return (
+        # simple_kmeans_clusters == metaDeCluster and
+        # sp_kmeans_clusters == metaDeCluster and
         birch_clusters == metaDeCluster and
         leader_clusters == metaDeCluster
     )
