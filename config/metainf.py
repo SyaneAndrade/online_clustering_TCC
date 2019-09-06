@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 
 
+class Info:
+  def __init__(self, name, threshholdBirch, threshholdLeader, numCluster):
+    self.name = name
+    self.threshholdBirch = threshholdBirch
+    self.threshholdLeader = threshholdLeader
+    self.numCluster = numCluster
+
 dados = "P"
 # numCluster = "K"
 results = "GT"
@@ -28,12 +35,5 @@ valoresParaAlgoritmos = {
   "yeast": Info("yeast", 0, 0, 10)
 }
 
-
-class Info:
-  def __init__(self, name, threshholdBirch, threshholdLeader, numCluster):
-    self.name = name
-    self.threshholdBirch = threshholdBirch
-    self.threshholdLeader = threshholdLeader
-    self.numCluster = numCluster
 
 
