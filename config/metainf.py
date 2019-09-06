@@ -24,7 +24,7 @@ valoresParaAlgoritmos = {
   "optic": Info("optic", 0, 0, 10),
   "pageblocks": Info("pageblocks", 0, 0, 5),
   "satellite": Info("satellite", 0, 0, 7),
-  "magic": Info("magic", 0, 0, 2),
+  "magic": Info("magic", 0.25, 2.1, 2),
   "yeast": Info("yeast", 0, 0, 10)
 }
 
