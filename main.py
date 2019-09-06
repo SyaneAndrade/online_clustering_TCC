@@ -39,8 +39,8 @@ def iniciaGerenciador(dataset, num_cluster, tsbirch, tsLeader, numPart):
     return gerenciador
 
 def instanciarGerenciador(dataset):
-    caminho = "dados/mock/" + lista[index] + "/" + lista[index] + dados + ".csv"
-    print(lista[index])
+    caminho = "dados/mock/" + dataset.name + "/" + dataset.name + dados + ".csv"
+    print(dataset.name)
     gerenciador = Gerenciador(caminho)
     return gerenciador
 
