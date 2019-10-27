@@ -16,6 +16,7 @@ class DAOarquivo(object):
     num_part = None
     dataset = None
     particao = None
+    particao_cluster = None
     _rowAcess = []
     randon_data = []
     randon_dados = None
@@ -26,8 +27,12 @@ class DAOarquivo(object):
 
 
     def calcula_particao(self, num_part):
-        self.batch = round(len(self.dataset) / num_part)
-        self.num_part = num_part
+        if num_part == 0:
+            self.batch = 1
+            self.num_part = num_part
+        else:
+            self.batch = round(len(self.dataset) / num_part)
+            self.num_part = num_part
     
 
     def pega_particao(self):
@@ -35,7 +40,11 @@ class DAOarquivo(object):
         self.pont_final = self.pont_final + self.batch
         if(self.pont_final >= len(self.dataset)):
             self.pont_final = len(self.dataset)
-        self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+        self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:len(self.dataset[0])].values)
+        if self.particao_cluster is None:
+            self.particao_cluster = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final,  0:len(self.dataset[0])].values)
+        else:
+            self.particao_cluster = np.append(self.particao_cluster, self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final,  0:len(self.dataset[0])].values), axis=0)
         if(self.pont_final == len(self.dataset)):
             return False
         return True
@@ -53,15 +62,19 @@ class DAOarquivo(object):
         self.pont_inicial = 0
         self.pont_final = self.batch
         self.dados = self.normaliza_dados(self.dataset.iloc[:, 0:len(self.dataset[0])].values)
-        self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:4].values)
+        self.particao = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:len(self.dataset[0])].values)
+        if self.particao_cluster == None:
+            self.particao_cluster = self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:len(self.dataset[0])].values)
+        else:
+            self.particao_cluster.append(self.normaliza_dados(self.dataset.iloc[self.pont_inicial:self.pont_final, 0:len(self.dataset[0])].values))
         self.cria_aleatorio()
         return True
 
     
     def normaliza_dados(self, dados):
         minmax_scaler = sklearn.preprocessing.MinMaxScaler(feature_range=(0, 1))
-        return minmax_scaler.fit_transform(dados)
-        # return dados
+        # return minmax_scaler.fit_transform(dados)
+        return dados
 
     def cria_aleatorio(self):
         data = []

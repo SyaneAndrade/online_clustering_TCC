@@ -111,4 +111,3 @@ venv.bak/
 dmypy.json
 
 # ignorar txt criados
-*.txt

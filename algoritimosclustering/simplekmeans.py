@@ -29,6 +29,7 @@ class SimpleKmeansPython(object):
             self.labels_temporary = self.kmeans.labels_
         self.centers = self.kmeans.cluster_centers_
         self.T = self.kmeans.cluster_centers_.T
+        return self.labels_temporary
 
     def atualiza_kmeans(self, dados):
         self.kmeans = KMeans(n_clusters=self.n_cluster, init=self.centers)
