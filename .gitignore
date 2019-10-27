@@ -3,7 +3,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+.DS_Store
 # C extensions
 *.so
 
@@ -111,4 +111,3 @@ venv.bak/
 dmypy.json
 
 # ignorar txt criados
-*.txt
