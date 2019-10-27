@@ -22,11 +22,14 @@ class SimplePassKmeans(object):
 
     
     def aplica_kmeans(self, dados):
+        if self.centers is None:
+            self.inicia_kmeans(dados)
         self.labels_temporary  = []
         for item in dados:
             cluster = self.k_means_update(item)
             self.labels.append(cluster)
             self.labels_temporary.append(cluster)
+        return self.labels_temporary
         
         
     def k_means_update(self, point, cluster_counts = None):

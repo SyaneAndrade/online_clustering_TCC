@@ -12,7 +12,7 @@ lista = ["magic"] #, "yeast"]
 
 numCluster = [2] #, 10]
 
-numPart = 1
+numPart = 0
 
 threshholdBirch = [0.25]  #0.209] #0.2037821906368138120]
 
