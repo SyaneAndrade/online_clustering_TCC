@@ -17,6 +17,6 @@ class MarjorityVoting(object):
                 count_vote -= 1
         return cluster
     
-    def marjorityvoting(self):
-        self.labels.append(self.counting_votes)
+    def marjorityvoting(self, cluster):
+        self.labels.append(cluster)
     
