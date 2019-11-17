@@ -11,9 +11,21 @@ def preencherClusters(dadosOrganizados, algoritmoCluster):
             novoCluster = Cluster(np.array(dadosOrganizados[cluster]['dados']), dadosOrganizados[cluster]['centroid'])
             novoCluster.AtualizaEstatisticas()
             algoritmoCluster.clusters.append(novoCluster)
+    elif(len(algoritmoCluster.clusters) < len(algoritmoCluster.centers)):
+        for cluster in range(0, len(algoritmoCluster.centers)):
+            if(cluster < len(algoritmoCluster.clusters)):
+                if(len(dadosOrganizados[cluster]['dados']) > 0):
+                    algoritmoCluster.clusters[cluster].AtualizaDados(np.array(dadosOrganizados[cluster]['dados']))
+                algoritmoCluster.clusters[cluster].centroide = dadosOrganizados[cluster]['centroid']
+                algoritmoCluster.clusters[cluster].AtualizaEstatisticas()
+            else:
+                novoCluster = Cluster(np.array(dadosOrganizados[cluster]['dados']), dadosOrganizados[cluster]['centroid'])
+                novoCluster.AtualizaEstatisticas()
+                algoritmoCluster.clusters.append(novoCluster)
     else:
         for index in  range(0, len(algoritmoCluster.clusters)):
-            algoritmoCluster.clusters[index].AtualizaDados(np.array(dadosOrganizados[index]['dados']))
+            if(len(dadosOrganizados[index]['dados']) > 0):
+                algoritmoCluster.clusters[index].AtualizaDados(np.array(dadosOrganizados[index]['dados']))
             algoritmoCluster.clusters[index].centroide = dadosOrganizados[index]['centroid']
             algoritmoCluster.clusters[index].AtualizaEstatisticas()
 
