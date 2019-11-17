@@ -98,13 +98,15 @@ def main():
             # Aplica o algoritimo kmenas nos dados
             gerenciador.novoDataStream(False)
             #Plota o grafico mostrando a distribuição dos dados nos clusters
-            count += 1
-            print(str(count) + '\n\n')
+            # count += 1
+            # print(str(count) + '\n\n')
         gerenciador.finalizador(lista[index])
-        plotGraficoClustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH", gerenciador.daoIO.dados)
-        plotGraficoClustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me", gerenciador.daoIO.dados)
-        plotGraficoClustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm", gerenciador.daoIO.dados)
-        plotGraficoClustering(gerenciador.simple_kmeans.labels, gerenciador.simple_kmeans.centers, "Kmeans sklearn",  gerenciador.daoIO.dados)
+        print("BIRCH " + str(len(gerenciador.birch.centers)))
+        print("LEADER " + str(len(gerenciador.leader.centers)))
+        # plotGraficoClustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH", gerenciador.daoIO.dados)
+        # plotGraficoClustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me", gerenciador.daoIO.dados)
+        # plotGraficoClustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm", gerenciador.daoIO.dados)
+        # plotGraficoClustering(gerenciador.simple_kmeans.labels,gerenciador.simple_kmeans.centers, "Kmeans sklearn",  gerenciador.daoIO.dados)
         # gerenciador.mostra_estatisticas()
 
 
