@@ -29,7 +29,10 @@ class Cluster(object):
 
     def AtualizaDados(self, new_item):
         # if(new_item not in self.dataset):
-        self.dataset = np.append(self.dataset, new_item,  axis=0)
+        if(len(self.dataset) > 0):
+            self.dataset = np.append(self.dataset, new_item,  axis=0)
+        else:
+            self.dataset = new_item
     
 
     def AcessaDado(self, posicao):

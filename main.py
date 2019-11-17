@@ -101,8 +101,8 @@ def main():
             # count += 1
             # print(str(count) + '\n\n')
         gerenciador.finalizador(lista[index])
-        print("BIRCH " + str(len(gerenciador.birch.centers)))
-        print("LEADER " + str(len(gerenciador.leader.centers)))
+        print("BIRCH " + str(len(gerenciador.birch.clusters)))
+        print("LEADER " + str(len(gerenciador.leader.clusters)))
         # plotGraficoClustering(gerenciador.birch.labels, gerenciador.birch.centers, "BIRCH", gerenciador.daoIO.dados)
         # plotGraficoClustering(gerenciador.sp_kmeans.labels, gerenciador.sp_kmeans.centers, "Kmeans online mode make for me", gerenciador.daoIO.dados)
         # plotGraficoClustering(gerenciador.leader.labels, gerenciador.leader.centers, "The Leader Algorithm", gerenciador.daoIO.dados)

@@ -13,18 +13,18 @@ dados = "P"
 results = "GT"
 
 # lista = ["constraceptive", "german", "optic", "pageblocks", "satellite", "magic", "yeast"]
-lista = ["constraceptive"] #, "yeast"]
+lista = ["pageblocks"] #, "yeast"]
 
 # numCluster = [3, 2, 2, 10, 5, 7, 10]
 
-numCluster = [3] #, 10]
+numCluster = [5] #, 10]
 
 numPart = 0
 
-threshholdBirch = [5]  #0.209] #0.2037821906368138120]
+threshholdBirch = [11950]  #0.209] #0.2037821906368138120]
 
 # threshholdLeader = [19.66]#0.95]#, 0.68]
-threshholdLeader = [19.9999999999999982236406]#[19.99999999999999822365 0.95]#, 0.68]
+threshholdLeader = [50000]#[19.99999999999999822365 0.95]#, 0.68]
 
 valoresParaAlgoritmos = {
   "constraceptive": Info("constraceptive", 5, 19.9999999999999982236406, 3), # Leader não esta correto
