@@ -111,4 +111,4 @@ venv.bak/
 dmypy.json
 
 # ignorar txt criados
-dados/mock/*.txt
+dados/mock/*/*.txt
