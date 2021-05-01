@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 
-class ContagemPares(object):
+class ContagemParesOnline(object):
 
     def __init__(self, alg1, alg2):
         self.alg1 = alg1
@@ -18,7 +18,6 @@ class ContagemPares(object):
         self.index_part2 = None
         self.matriz_confusao = None
         self.matriz_confusao_pares = np.zeros((2, 2))
-    
     
     def atualizaValores(self, val_particao1, val_particao2):
         self.tam_part1 += 1
@@ -37,4 +36,11 @@ class ContagemPares(object):
         self.index_part1 = np.where(self.cluster == self.particao1)[0][0]
         self.index_part2 = np.where(self.cluster == self.particao2)[0][0]
 
+    def matrizConfusao(self):
+        # resize without move any data m.resize((6,6), refcheck=False) 
+        if self.matriz_confusao is None:
+            self.matriz_confusao = np.zeros((self.classes_index, self.cluster_index))
+        elif self.matriz_confusao.shape != (self.classes_index, self.cluster_index):
+            self.matriz_confusao.resize((self.classes_index, self.cluster_index), refcheck=False)
+        self.matriz_confusao[self.index_part1][self.index_part2] += 1
 
