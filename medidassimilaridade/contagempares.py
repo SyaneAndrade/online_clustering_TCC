@@ -41,3 +41,14 @@ class ContagemParesOnline(object):
             self.matriz_confusao.resize((self.classes_index, self.cluster_index), refcheck=False)
         self.matriz_confusao[self.index_part1][self.index_part2] += 1
 
+    def matrizConfusaoParesOnline(self):
+        soma_linhas = np.ravel(self.matriz_confusao.sum(axis=1))
+        soma_colunas = np.ravel(self.matriz_confusao.sum(axis=0))
+        print(self.matriz_confusao.data)
+        soma_quadrados = np.square(self.matriz_confusao.data).sum()
+        transposta_matriz_confusao = self.matriz_confusao.transpose()
+        self.matriz_confusao_pares[1, 1] = soma_quadrados - self.tamanho_dataset
+        self.matriz_confusao_pares[0, 1] = self.matriz_confusao.dot(soma_colunas).sum() - soma_quadrados
+        self.matriz_confusao_pares[1, 0] = transposta_matriz_confusao.dot(soma_linhas).sum() - soma_quadrados
+        self.matriz_confusao_pares[0, 0] = self.tamanho_dataset ** 2 -  self.matriz_confusao_pares[0, 1] - self.matriz_confusao_pares[1, 0] - soma_quadrados
+        
