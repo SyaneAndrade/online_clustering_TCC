@@ -8,8 +8,7 @@ class ContagemParesOnline(object):
         self.alg2 = alg2
         self.val_particao1 = None
         self.val_particao2 = None
-        self.tam_part1 = 0
-        self.tam_part2 = 0
+        self.tamanho_dataset = 0
         self.cluster = np.array([])
         self.cluster_index = 0
         self.classes_index = 0
@@ -20,8 +19,7 @@ class ContagemParesOnline(object):
         self.matriz_confusao_pares = np.zeros((2, 2))
     
     def atualizaValores(self, val_particao1, val_particao2):
-        self.tam_part1 += 1
-        self.tam_part2 += 1
+        self.tamanho_dataset += 1
         self.particao1 = val_particao1
         self.particao2 = val_particao2
         index_part1 = list(zip(np.where(self.classes == self.particao1)[0]))
@@ -37,7 +35,6 @@ class ContagemParesOnline(object):
         self.index_part2 = np.where(self.cluster == self.particao2)[0][0]
 
     def matrizConfusao(self):
-        # resize without move any data m.resize((6,6), refcheck=False) 
         if self.matriz_confusao is None:
             self.matriz_confusao = np.zeros((self.classes_index, self.cluster_index))
         elif self.matriz_confusao.shape != (self.classes_index, self.cluster_index):
