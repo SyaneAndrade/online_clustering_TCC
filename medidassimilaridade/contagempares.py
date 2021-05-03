@@ -52,3 +52,20 @@ class ContagemParesOnline(object):
         self.matriz_confusao_pares[1, 0] = transposta_matriz_confusao.dot(soma_linhas).sum() - soma_quadrados
         self.matriz_confusao_pares[0, 0] = self.tamanho_dataset ** 2 -  self.matriz_confusao_pares[0, 1] - self.matriz_confusao_pares[1, 0] - soma_quadrados
         
+    def randIndex(self):
+        numerador = self.matriz_confusao_pares.diagonal().sum() 
+        denominador = self.matriz_confusao_pares.sum()
+        if numerador == denominador or denominador == 0:
+            return 1.0
+        return numerador / denominador
+    
+    def adjustedRandIndex(self):
+        (verdadeiro_negativo, falso_positivo), (falso_negativo, verdadeiro_positivo) = self.matriz_confusao_pares
+        if falso_negativo == 0 and falso_positivo == 0:
+            return 1
+        return 2. * (verdadeiro_positivo * verdadeiro_negativo - 
+                    falso_negativo * falso_positivo) / ((verdadeiro_positivo + falso_negativo) *
+                                                        (falso_negativo + verdadeiro_negativo) +
+                                                        (verdadeiro_positivo + falso_positivo) *
+                                                        (falso_positivo + verdadeiro_negativo))
+        
