@@ -31,7 +31,7 @@ class ContagemParesOnline(object):
             self.cluster = np.append( self.cluster, self.particao2)
             self.cluster_index += 1
             
-        self.index_part1 = np.where(self.cluster == self.particao1)[0][0]
+        self.index_part1 = np.where(self.classes == self.particao1)[0][0]
         self.index_part2 = np.where(self.cluster == self.particao2)[0][0]
 
     def matrizConfusao(self):
@@ -44,7 +44,6 @@ class ContagemParesOnline(object):
     def matrizConfusaoParesOnline(self):
         soma_linhas = np.ravel(self.matriz_confusao.sum(axis=1))
         soma_colunas = np.ravel(self.matriz_confusao.sum(axis=0))
-        print(self.matriz_confusao.data)
         soma_quadrados = np.square(self.matriz_confusao.data).sum()
         transposta_matriz_confusao = self.matriz_confusao.transpose()
         self.matriz_confusao_pares[1, 1] = soma_quadrados - self.tamanho_dataset
