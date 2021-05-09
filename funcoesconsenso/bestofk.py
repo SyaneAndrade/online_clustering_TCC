@@ -40,7 +40,11 @@ class BestOfKOnline(object):
                 if self.tipos_agrupamentos[i] != self.tipos_agrupamentos[j]:
                     key1 = self.tipos_agrupamentos[i] + "_" + self.tipos_agrupamentos[j]
                     key2 = self.tipos_agrupamentos[j] + "_" + self.tipos_agrupamentos[i]
-                    self.get_pares(key1, key2).atualiza(labels[i], labels[j])
+                    contagem_pares = self.get_pares(key1, key2)
+                    if contagem_pares.alg1 == self.tipos_agrupamentos[i]:
+                        contagem_pares.atualiza(labels[i], labels[j])
+                    else:
+                        contagem_pares.atualiza(label[j], labels[i])
 
     def __atualizaMatrizDistancia(self):
         for i in range(0,self.quantidade_algo):
