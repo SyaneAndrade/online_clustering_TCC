@@ -3,11 +3,14 @@ from clusters.clusterfeatures import ClusterFeatures
 from dados.daoarquivo import DAOarquivo
 from sklearn.cluster import KMeans
 import numpy as np
+from copy import deepcopy
 from algoritimosclustering.simplekmeans import SimpleKmeansPython
 from algoritimosclustering.simplekmeansmake import SimplePassKmeans
 from algoritimosclustering.birch import BirchAlgo
 from algoritimosclustering.leader import TheLeaderAlgorithm
 from algoritimosclustering.marjorityvoting import MarjorityVoting
+from funcoesconsenso.bestofk import BestOfKOnline
+from funcoesconsenso.bestoneelementsmoves import BestOneElementsMovesOnline
 from helper.funcoesaux import preencherClusters
 from helper.funcoesaux import pegaClustersOrganizados
 from helper.funcoesaux import criaTexto
@@ -26,6 +29,7 @@ class Gerenciador(object):
     marjorityvoting = None
     vote = None
     num_cluster = 0
+    list_algo = ["kmeans", "birch", "leader"]
 
     def __init__(self, caminho):
         self.daoIO = DAOarquivo(caminho)
@@ -36,6 +40,8 @@ class Gerenciador(object):
         self.birch = BirchAlgo(threshold=threshholdBirch)
         self.leader = TheLeaderAlgorithm(threshold=thresholdLeader)
         self.marjorityvoting = MarjorityVoting()
+        self.bok = BestOfKOnline(self.list_algo)
+        self.boem = BestOneElementsMovesOnline(self.list_algo)
         self.num_cluster = num_cluster
         self.daoIO.cluster = num_cluster
     
@@ -61,6 +67,7 @@ class Gerenciador(object):
                 for i in range(self.num_cluster, 0, -1):
                     self.cria_vote(-i)
                     self.marjorityvoting.counting_votes(self.votes)
+                    self.gerenciaBests(-i)
                 self.criarCluster(True)
         else:
             self.executa = self.daoIO.pega_particao()
@@ -76,6 +83,7 @@ class Gerenciador(object):
                     self.cria_vote(i)
                     cluster = self.marjorityvoting.counting_votes(self.votes)
                     self.marjorityvoting.marjorityvoting(cluster)
+                    self.gerenciaBests(i)
                 self.criarCluster(False)
                 self.daoIO.particao_cluster = None
             elif((len(self.daoIO.particao_cluster) > self.num_cluster) and self.executa == False):
@@ -87,11 +95,19 @@ class Gerenciador(object):
                     self.cria_vote(i)
                     cluster = self.marjorityvoting.counting_votes(self.votes)
                     self.marjorityvoting.marjorityvoting(cluster)
+                    self.gerenciaBests(i)
                 self.criarCluster(False)
                 self.daoIO.particao_cluster = None
 
     def cria_vote(self, pos):
         self.votes = np.array([self.simple_kmeans.labels[pos], self.birch.labels[pos], self.leader.labels[pos]])
+
+    def gerenciaBests(self, pos):
+        self.boem.dict_contagem_pares = deepcopy(self.bok.dict_contagem_pares)
+        self.bok.atualiza([self.simple_kmeans.labels[pos], self.birch.labels[pos], self.leader.labels[pos]])
+        self.bok.getBestK()
+        self.boem.atualiza([self.simple_kmeans.labels[pos], self.birch.labels[pos], self.leader.labels[pos]], self.bok.best_algo)
+        self.boem.getBestElementMoves()
 
     def criarCluster(self, randon):
 
