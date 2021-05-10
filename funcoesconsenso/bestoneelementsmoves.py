@@ -6,6 +6,7 @@ class BestOneElementsMovesOnline(object):
     dict_contagem_pares = {}
     agrupamento_escolhido = None
     quantidade_classes = 0
+    labels = []
 
     def __init__(self, tipos_agrupamentos):
         self.tipos_agrupamentos = tipos_agrupamentos
@@ -45,4 +46,5 @@ class BestOneElementsMovesOnline(object):
     def getBestElementMoves(self):
         distancia_minima = min(self.somas_distancias)
         self.best_element = self.somas_distancias.index(distancia_minima)
+        self.labels.append(self.best_element)
         return self.best_element

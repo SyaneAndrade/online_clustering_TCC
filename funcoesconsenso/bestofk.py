@@ -9,6 +9,7 @@ class BestOfKOnline(object):
     soma_distancia = None
     __labels = None
     best_algo = None
+    labels = []
 
     def __init__(self, tipos_agrupamentos):
         self.tipos_agrupamentos = tipos_agrupamentos
@@ -70,4 +71,6 @@ class BestOfKOnline(object):
         distancia_minima = min(self.soma_distancia)
         index_algo = np.where(self.soma_distancia == distancia_minima)[0][0]
         self.best_algo = self.tipos_agrupamentos[index_algo]
-        return self.__labels[index_algo]
+        self.best_label = self.__labels[index_algo]
+        self.labels.append(self.best_label)
+        return self.best_label
