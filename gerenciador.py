@@ -8,7 +8,7 @@ from algoritimosclustering.simplekmeans import SimpleKmeansPython
 from algoritimosclustering.simplekmeansmake import SimplePassKmeans
 from algoritimosclustering.birch import BirchAlgo
 from algoritimosclustering.leader import TheLeaderAlgorithm
-from algoritimosclustering.marjorityvoting import MarjorityVoting
+from funcoesconsenso.marjorityvoting import MarjorityVoting
 from funcoesconsenso.bestofk import BestOfKOnline
 from funcoesconsenso.bestoneelementsmoves import BestOneElementsMovesOnline
 from helper.funcoesaux import preencherClusters
