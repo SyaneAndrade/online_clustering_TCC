@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 
+"""Classes responsável pela contagem de pares, método utilizado para calcular umas 
+das as medidas de similaridade mais utilizadas em trabalhos correlatos"""
 class ContagemParesOnline(object):
 
     def __init__(self, alg1, alg2):
@@ -18,6 +20,7 @@ class ContagemParesOnline(object):
         self.rand_index = None
         self.rand_index_ajustado = None
     
+    # Chamada de todas as funções para atualização de variaveis/matriz e calculo da matriz de confusão de pares
     def atualiza(self, val_particao1, val_particao2):
         self.__atualizaValores(val_particao1, val_particao2)
         self.__matrizConfusao()
@@ -25,26 +28,35 @@ class ContagemParesOnline(object):
         self.__randIndex()
         self.__adjustedRandIndex()
     
+    # Mantém valores atualizados para a contagem de pares e matriz de confusão
     def __atualizaValores(self, val_particao1, val_particao2):
         self.tamanho_dataset += 1
+        # Verifica se o grupo existe nas lista de classes(Partição 1) e cluster(Partição 2)
         index_part1 = list(zip(np.where(self.classes == val_particao1)[0]))
         index_part2 = list(zip(np.where(self.cluster == val_particao2)[0]))
+        # Se não existir ele adiciona nas listas
         if(index_part1 == []):
            self.classes = np.append(self.classes, val_particao1)
            self.classes_index += 1
         if(index_part2 == []):
             self.cluster = np.append( self.cluster, val_particao2)
             self.cluster_index += 1
+        # index para atualização na matriz de confusão
         self.__index_part1 = np.where(self.classes == val_particao1)[0][0]
         self.__index_part2 = np.where(self.cluster == val_particao2)[0][0]
-            
+
+    # Mantém a a matriz de confusão atualizada        
     def __matrizConfusao(self):
         if self.matriz_confusao is None:
             self.matriz_confusao = np.zeros((self.classes_index, self.cluster_index))
+        # Caso exista uma nova classe ele da um resize na matriz
         elif self.matriz_confusao.shape != (self.classes_index, self.cluster_index):
             self.matriz_confusao.resize((self.classes_index, self.cluster_index), refcheck=False)
+        # Soma +1 na posição dos index das classes 
         self.matriz_confusao[self.__index_part1][self.__index_part2] += 1
 
+    # Calcula a matriz de confusão de pares conforme a matriz de confusão atualizada
+    # Função baseada pair_confusion_matrix do sklearn
     def __matrizConfusaoParesOnline(self):
         soma_linhas = np.ravel(self.matriz_confusao.sum(axis=1))
         soma_colunas = np.ravel(self.matriz_confusao.sum(axis=0))
@@ -54,7 +66,9 @@ class ContagemParesOnline(object):
         self.matriz_confusao_pares[0, 1] = self.matriz_confusao.dot(soma_colunas).sum() - soma_quadrados
         self.matriz_confusao_pares[1, 0] = transposta_matriz_confusao.dot(soma_linhas).sum() - soma_quadrados
         self.matriz_confusao_pares[0, 0] = self.tamanho_dataset ** 2 -  self.matriz_confusao_pares[0, 1] - self.matriz_confusao_pares[1, 0] - soma_quadrados
-        
+
+    # Calcula o rand index conforme a matriz de confusão de pares
+    # Função baseada rand_index do sklearn    
     def __randIndex(self):
         numerador = self.matriz_confusao_pares.diagonal().sum() 
         denominador = self.matriz_confusao_pares.sum()
@@ -64,6 +78,8 @@ class ContagemParesOnline(object):
         self.rand_index = numerador / denominador
         return self.rand_index 
     
+    # Calcula o adjusted rand index conforme a matriz de confusão de pares
+    # Função baseada adjusted_rand_index do sklearn 
     def __adjustedRandIndex(self):
         (verdadeiro_negativo, falso_positivo), (falso_negativo, verdadeiro_positivo) = self.matriz_confusao_pares
         if falso_negativo == 0 and falso_positivo == 0:
