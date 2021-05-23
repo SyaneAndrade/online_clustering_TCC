@@ -13,27 +13,27 @@ dados = "P"
 results = "GT"
 
 # lista = ["constraceptive", "german", "optic", "pageblocks", "satellite", "magic", "yeast"]
-lista = ["pageblocks"] #, "yeast"]
+lista = ["magic"] #, "yeast"]
 
 # numCluster = [3, 2, 2, 10, 5, 7, 10]
 
-numCluster = [5] #, 10]
+numCluster = [2] #, 10]
 
 numPart = 0
 
-threshholdBirch = [11950]  #0.209] #0.2037821906368138120]
+threshholdBirch = [137]  #0.209] #0.2037821906368138120]
 
 # threshholdLeader = [19.66]#0.95]#, 0.68]
-threshholdLeader = [50000]#[19.99999999999999822365 0.95]#, 0.68]
+threshholdLeader = [570]#[19.99999999999999822365 0.95]#, 0.68]
 
 valoresParaAlgoritmos = {
-  "constraceptive": Info("constraceptive", 5, 19.9999999999999982236406, 3), # Leader não esta correto
-  #"german": Info("german", 37, 150, 2), # CERTO JA
-  #"optic": Info("optic", 33.33, 235, 10), # CERTO JA
-  #"pageblocks": Info("pageblocks", 11950, 50000, 5), # CERTO JA
-  # "satellite": Info("satellite", 87.565, 660, 7), # CERTO JA
-  # "magic": Info("magic", 0.25, 2.1, 2), # CERTO JA
-  # "yeast": Info("yeast", 0.28, 1.07, 10) # CERTO JA
+  # "constraceptive": Info("constraceptive", 5, 11.3, 3), #Certo ja
+  #"german": Info("german", 37, 100, 2), # Certo ja
+  #"optic": Info("optic", 33.33, 45.5, 10), # Certo ja
+  #"pageblocks": Info("pageblocks", 11950, 30000, 5), # Certo ja
+  # "satellite": Info("satellite", 87.565, 135, 7), # Certo ja
+  # "magic": Info("magic",137, 570, 2), # Certo ja
+  # "yeast": Info("yeast", 0.28, 0.61, 10) # Certo ja
 }
 
 
