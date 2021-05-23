@@ -40,7 +40,8 @@ class TheLeaderAlgorithm(object):
             return cluster
         else:
             for clu in range(self.num_clusters):
-                cluster_distances[clu] = sum(np.sqrt((point - self._centers[clu])**2))
+                #cluster_distances[clu] = sum(np.sqrt((point - self._centers[clu])**2))
+                cluster_distances[clu] = np.sqrt(sum(pow(np.array(point) - self._centers[clu], 2)))
             cluster = np.argmin(cluster_distances)
             if(cluster_distances[cluster] > self.threshold):
                 self._centers.append(point)
