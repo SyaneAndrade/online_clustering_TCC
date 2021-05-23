@@ -3,6 +3,7 @@ import pandas as pd
 import sklearn.preprocessing
 from random import randint
 import numpy as np
+import os
 
 """
     DAO do arquivo, tem como parametro o caminho do arquivo
@@ -115,6 +116,11 @@ class DAOarquivo(object):
 
 
     def salvaArquivo(self, texto, nomeArquivo, path):
+        os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path + nomeArquivo + ".txt", "w") as arquivo:
             arquivo.write(texto)
             arquivo.close()
+    
+    def salvaCSV(self, dataframe, nomeArquivo, path):
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        dataframe.to_csv(path + nomeArquivo + '.csv', index=False, header=False)

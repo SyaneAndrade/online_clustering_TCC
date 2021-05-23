@@ -181,14 +181,17 @@ class Gerenciador(object):
         self.simple_kmeans.estatisticas()   
 
     def finalizador(self, dataset):
-        texto = criaTexto(self.simple_kmeans.clusters, "Simple pass K-Means " + dataset)
-        self.daoIO.salvaArquivo(texto, "SimplePassKMeans " + dataset, "dados/mock/" + dataset + "/")
+        caminho = "dados/mock/" + dataset + "/"
+        criaTexto(self.simple_kmeans, "simple_pass_k_means_" + dataset, self.daoIO, caminho, True)
 
-        texto = criaTexto(self.sp_kmeans.clusters, "Simple pass K-Means Example" + dataset)
-        self.daoIO.salvaArquivo(texto, "SimplePassKMeansExample " + dataset, "dados/mock/" + dataset + "/")
+        criaTexto(self.sp_kmeans, "simple_pass_k_means_make_" + dataset, self.daoIO, caminho, True)
 
-        texto = criaTexto(self.birch.clusters, "BIRCH " + dataset)
-        self.daoIO.salvaArquivo(texto, "BIRCH " + dataset, "dados/mock/" + dataset + "/")
+        criaTexto(self.birch, "birch_" + dataset, self.daoIO, caminho, True)
 
-        texto = criaTexto(self.leader.clusters, "The Leader " + dataset)
-        self.daoIO.salvaArquivo(texto, "TheLeader " + dataset, "dados/mock/" + dataset + "/")
+        criaTexto(self.leader, "leader_" + dataset, self.daoIO, caminho, True)
+
+        criaTexto(self.boem, "boem_"+ dataset, self.daoIO, caminho, False)
+
+        criaTexto(self.bok, "bok_" + dataset, self.daoIO, caminho, False)
+        
+        criaTexto(self.marjorityvoting, "marjorityvoting_" + dataset, self.daoIO, caminho, False)

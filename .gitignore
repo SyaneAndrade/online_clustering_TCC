@@ -115,3 +115,6 @@ dados/mock/*/*.txt
 
 # ignorar virtual env
 virtualenv/*
+
+#ignora classificação
+dados/mock/*/*_*

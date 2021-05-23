@@ -3,6 +3,7 @@ from clusters.cluster import Cluster
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.io as scp
+import pandas as pd
 
 
 def preencherClusters(dadosOrganizados, algoritmoCluster):
@@ -54,19 +55,26 @@ def plotGraficoClustering(labels, centers, name, data):
     plt.legend()
     plt.show()
 
-def criaTexto(cluster, nomeAlgoritimo):
-    texto = nomeAlgoritimo + "\n"
-    for index in range(len(cluster)):
-        texto += "\n\n\n\nCluster " + str(index) + "\n"
-        texto += "DATASET\n" + str(cluster[index].dataset) + "\n"
-        texto += "\n\nCluster Features " + str(index) + "\n"
-        texto += "SS = " + str(cluster[index].clusterFeat.SS) + "\n"
-        texto += "LS = " + str(cluster[index].clusterFeat.LS) + "\n"
-        texto += "N = " + str(cluster[index].clusterFeat.N) + "\n"
+def criaTexto(cluster, nomeAlgoritimo, daoIO, caminho, isCluster):
+    texto = ""
+    print(isCluster)
+    if isCluster:
+        for index in range(len(cluster.clusters)):
+            texto += "\n\n\n\nCluster " + str(index) + "\n"
+            texto += "\n\n\nCentroide" + str(cluster.clusters[index].centroide) + "\n\n"
+            texto += "\n\nCluster Features " + str(index) + "\n"
+            texto += "SS = " + str(cluster.clusters[index].clusterFeat.SS) + "\n"
+            texto += "LS = " + str(cluster.clusters[index].clusterFeat.LS) + "\n"
+            texto += "N = " + str(cluster.clusters[index].clusterFeat.N) + "\n"
+            daoIO.salvaArquivo(texto, nomeAlgoritimo + "_cluster_features_" + str(index), caminho + nomeAlgoritimo + "/")
+            dados_cluster = pd.DataFrame(list(map(np.ravel, cluster.clusters[index].dataset)))
+            daoIO.salvaCSV(dados_cluster, nomeAlgoritimo + "_cluster_" + str(index), caminho + nomeAlgoritimo + "/")
+            texto = ""
+    dados_label = pd.DataFrame(list(map(np.ravel, cluster.labels)))
+    daoIO.salvaCSV(dados_label, nomeAlgoritimo + "_labels", caminho + nomeAlgoritimo + "/")
 
     # print(texto)
     return texto
-
 
 def convertMatCsv(path, nomearquivo, extensao):
     data = scp.loadmat(path + nomearquivo + extensao)
