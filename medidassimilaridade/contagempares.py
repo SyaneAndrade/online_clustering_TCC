@@ -31,19 +31,23 @@ class ContagemParesOnline(object):
     # Mantém valores atualizados para a contagem de pares e matriz de confusão
     def __atualizaValores(self, val_particao1, val_particao2):
         self.tamanho_dataset += 1
-        # Verifica se o grupo existe nas lista de classes(Partição 1) e cluster(Partição 2)
-        index_part1 = list(zip(np.where(self.classes == val_particao1)[0]))
-        index_part2 = list(zip(np.where(self.cluster == val_particao2)[0]))
-        # Se não existir ele adiciona nas listas
-        if(index_part1 == []):
-           self.classes = np.append(self.classes, val_particao1)
-           self.classes_index += 1
-        if(index_part2 == []):
-            self.cluster = np.append( self.cluster, val_particao2)
-            self.cluster_index += 1
+        if(self.classes_index < (val_particao1 + 1)):
+           acrescimo = (val_particao1 + 1) - self.classes_index
+           self.classes_index += acrescimo
+        if(self.cluster_index < (val_particao2 + 1)):
+            acrescimo = (val_particao2 + 1) - self.cluster_index
+            self.cluster_index += acrescimo
         # index para atualização na matriz de confusão
-        self.__index_part1 = np.where(self.classes == val_particao1)[0][0]
-        self.__index_part2 = np.where(self.cluster == val_particao2)[0][0]
+        self.__index_part1 =val_particao1
+        self.__index_part2 =val_particao2
+    
+    def __redimensionaMatriz(self):
+        nova_matriz = np.zeros((self.classes_index, self.cluster_index))
+        linhas, colunas = self.matriz_confusao.shape
+        for i in range(linhas):
+            for j in range(colunas):
+                nova_matriz[i][j] = self.matriz_confusao[i][j]
+        return nova_matriz
 
     # Mantém a a matriz de confusão atualizada        
     def __matrizConfusao(self):
@@ -51,7 +55,7 @@ class ContagemParesOnline(object):
             self.matriz_confusao = np.zeros((self.classes_index, self.cluster_index))
         # Caso exista uma nova classe ele da um resize na matriz
         elif self.matriz_confusao.shape != (self.classes_index, self.cluster_index):
-            self.matriz_confusao.resize((self.classes_index, self.cluster_index), refcheck=False)
+            self.matriz_confusao = self.__redimensionaMatriz()
         # Soma +1 na posição dos index das classes 
         self.matriz_confusao[self.__index_part1][self.__index_part2] += 1
 
