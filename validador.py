@@ -6,7 +6,7 @@ from sklearn.metrics.cluster import rand_score, pair_confusion_matrix, contingen
 
 
 def readLabels(path):
-    return pd.read_csv(path)
+    return pd.read_csv(path, header=None)
 
 
 
@@ -25,21 +25,21 @@ def main(dataset, algo):
     rand_index = []
     for index in range(len(labels_verdadeiro)):
         contagem_de_pares.atualiza(labels_verdadeiro[index], labels_particao[index])
-        #print("Valores: {} {} index : {}".format(labels_verdadeiro[index], labels_particao[index], index))
-        #print("Matriz confusao \n {}".format(contagem_de_pares.matriz_confusao))
         rand_index.append(contagem_de_pares.rand_index)
     dados_rand_index = pd.DataFrame(list(map(np.ravel, rand_index)))
     nomeArquivo =  algo + "_" + dataset + "/RI"
     dados_rand_index.to_csv(caminho + nomeArquivo + '.csv', index=False, header=False)
     print("RI Python {} {}: {}".format(dataset, algo, sk_rand_score))
     print("N's Python {} {}: \n{}".format(dataset, algo, sk_pair_confusion_matrix))
-    # print("Contigencia's Python {} {}: \n{}".format(dataset, algo, sk_contigencia))
+    print("Contigencia's Python {} {}: \n{}".format(dataset, algo, sk_contigencia))
     print("RI {} {}: {}".format(dataset, algo, contagem_de_pares.rand_index))
     print("N's {} {}: \n{}".format(dataset, algo, contagem_de_pares.matriz_confusao_pares))
-    # print("Contigencia's {} {}: \n{}".format(dataset, algo, contagem_de_pares.matriz_confusao))
+    print("Contigencia's {} {}: \n{}".format(dataset, algo, contagem_de_pares.matriz_confusao))
 
 
 if __name__ == '__main__':
+    list_databases = ["constraceptive", "german", "optic", "pageblocks", "satellite", "magic", "yeast"]
     list_algo = ['simple_pass_k_means', 'simple_pass_k_means_make', 'leader', 'birch', 'bok', 'boem', 'marjorityvoting']
-    for item in list_algo:
-       main('optic', item)
+    for database in list_databases:
+        for algo in list_algo:
+           main(database, algo)
