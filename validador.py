@@ -5,6 +5,7 @@ import numpy as np
 from sklearn.metrics.cluster import rand_score, pair_confusion_matrix, contingency_matrix
 import statistics as sta
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import seaborn as sns
 import os
 
@@ -57,10 +58,9 @@ def gera_graph(dataset, column):
         sp_k_means_ar = sp_k_means.to_numpy().flatten()
         dict[algo] = sp_k_means_ar
     dados = pd.DataFrame(dict)
-    print(dados.head())
-    df = dados.stack().reset_index().rename(columns={"level_0": "samples", "level_1": "algorithm", 0: column})
-    df_pivot = df.pivot("samples",'algorithm', column)
-    sns.lineplot(x='samples', y=column, hue='algorithm', style='algorithm', data=df)
+    df = dados.stack().reset_index().rename(columns={"level_0": "time", "level_1": "clustering", 0: column})
+    df_pivot = df.pivot("time",'clustering', column)
+    sns.relplot(x='time', y=column, hue='clustering', style='clustering', kind='line', data=df)
     imagens = "dados/mock/" + dataset + "/" + dataset + "_graficos/"
     os.makedirs(os.path.dirname(imagens), exist_ok=True)
     plt.savefig(imagens + database + "_" + column + ".jpg")
@@ -68,9 +68,10 @@ def gera_graph(dataset, column):
 
 if __name__ == '__main__':
     list_databases = ["constraceptive", "german", "optic", "pageblocks", "satellite", "magic", "yeast"]
-    list_algo = ['simple_pass_k_means', 'simple_pass_k_means_make', 'leader', 'birch', 'bok', 'boem', 'marjorityvoting']
+    list_algo = ['simple_pass_k_means', 'leader', 'birch', 'bok', 'boem', 'marjorityvoting']
     columns = ['databse', 'algorithm', 'rand_index', 'media', 'desvio_padrao']
-    
+    mpl.rc('figure', max_open_warning = 0)
+    sns.set_theme()
     estastisticas_gerais = []
     for database in list_databases:
         for algo in list_algo:
