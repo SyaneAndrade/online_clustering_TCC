@@ -103,7 +103,6 @@ class Gerenciador(object):
         self.votes = np.array([self.simple_kmeans.labels[pos], self.birch.labels[pos], self.leader.labels[pos]])
 
     def gerenciaBests(self, pos):
-        self.boem.dict_contagem_pares = deepcopy(self.bok.dict_contagem_pares)
         self.bok.atualiza([self.simple_kmeans.labels[pos], self.birch.labels[pos], self.leader.labels[pos]])
         self.bok.getBestK()
         self.boem.atualiza([self.simple_kmeans.labels[pos], self.birch.labels[pos], self.leader.labels[pos]], self.bok.best_algo)
