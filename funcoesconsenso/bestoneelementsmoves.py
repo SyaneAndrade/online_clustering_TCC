@@ -50,7 +50,7 @@ class BestOneElementsMovesOnline(object):
                         contagem_pares.atualiza(labels[self.index_agrupamento_escolhido], labels[i])
                     else:
                         contagem_pares.atualiza(labels[i], labels[self.index_agrupamento_escolhido])
-                    soma_distancia += contagem_pares.rand_index_ajustado
+                    soma_distancia += contagem_pares.rand_index
             self.somas_distancias.append(soma_distancia)
             self.dict_contagem_pares_list.append(deepcopy(dict_pares))
     
