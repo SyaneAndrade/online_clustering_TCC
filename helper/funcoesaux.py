@@ -57,7 +57,6 @@ def plotGraficoClustering(labels, centers, name, data):
 
 def criaTexto(cluster, nomeAlgoritimo, daoIO, caminho, isCluster):
     texto = ""
-    print(isCluster)
     if isCluster:
         for index in range(len(cluster.clusters)):
             texto += "\n\n\n\nCluster " + str(index) + "\n"
