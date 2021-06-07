@@ -1,6 +1,6 @@
 # Agrupamento de dados Online via Combinação de Partição
 
-Este repositório contem as implementações para fundamentar a pesquisa de adaptação de métodos de Agrupamento via Combinação de Partição no contexto de Agrupamento de Dados Online afim de aumentar a confiabiabilidade dos resultados.
+Este repositório contem as implementações para fundamentar a pesquisa de adaptação de métodos de Agrupamento via Combinação de Partição no contexto de Agrupamento de Dados Online afim de validar a sua utilização.
 O trabalho aqui em si, simula o stream de dados, fazendo uma classificação do dado por vez.
 
 ## Instalando dependencias
