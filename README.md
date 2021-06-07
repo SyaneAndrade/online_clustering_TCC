@@ -23,6 +23,6 @@ Para mudar o database que está sendo classificado, editar o arquivo : `conf/met
 * magic
 * yeast
 
-Essas bases são publicas e podem ser encontradas no [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php)
+Essas bases estão publicamente disponíveis em [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php)
 
 As configurações para cada dataset está em um comentário no `metainf.py`.
